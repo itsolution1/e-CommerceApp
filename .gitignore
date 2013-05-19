@@ -1,0 +1,20 @@
+*.class
+# Package Files #
+*.jar
+*.war
+*.ear
+/Enterprise Application/dist/
+/Enterprise Application/build/
+/Enterprise Application/Enterprise Application-ejb/dist/
+/Enterprise Application/Enterprise Application-ejb/build/
+/Enterprise Application/Enterprise Application-war/build/
+/Enterprise Application/Enterprise Application-war/dist/
+/Java Application/build/
+/Java Application/dist/
+/Enterprise Application/nbproject/private/
+/Java Application/nbproject/private/
+/Enterprise Application/Enterprise Application-war/nbproject/private/
+/Enterprise Application/Enterprise Application-ejb/nbproject/private/
+/Interfaces/nbproject/private/
+/Interfaces/dist/
+/Interfaces/build/
