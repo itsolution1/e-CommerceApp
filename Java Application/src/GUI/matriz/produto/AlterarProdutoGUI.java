@@ -7,6 +7,7 @@ package GUI.matriz.produto;
 import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
 import controller.ProdutoController;
+import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
 import jpa.Produto;
@@ -20,9 +21,11 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
-    private Produto[] produtos;
-    private Categoria[] categorias;
-    private int produtoAtual;
+    private List<Produto> produtos;
+    private List<Categoria> categorias;
+    private Categoria categoria;
+    private Produto produto;
+    
     
     /**
      * Creates new form ContatoGUI
@@ -33,9 +36,7 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
         setComboCategoria(comboCategoria);
         setComboProduto(comboProduto);
     }
-    
-    //tabela com as categorias
- 
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,15 +57,20 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
         txtDescricao = new java.awt.TextArea();
         nomeCategoriaText2 = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
-        nomeCategoriaText3 = new javax.swing.JLabel();
-        comboCategoria = new javax.swing.JComboBox();
         nomeCategoriaText4 = new javax.swing.JLabel();
         comboProduto = new javax.swing.JComboBox();
         botaoVoltar = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
+        nomeCategoriaText3 = new javax.swing.JLabel();
+        comboCategoria = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Contatos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         title.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -78,32 +84,11 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
         nomeCategoriaText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText.setText("Nome:");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-
         nomeCategoriaText1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText1.setText("Descrição:");
 
         nomeCategoriaText2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText2.setText("Preço:");
-
-        txtPreco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecoActionPerformed(evt);
-            }
-        });
-
-        nomeCategoriaText3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText3.setText("Categoria:");
-
-        comboCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCategoriaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelIncluirCategoriaLayout = new javax.swing.GroupLayout(panelIncluirCategoria);
         panelIncluirCategoria.setLayout(panelIncluirCategoriaLayout);
@@ -112,7 +97,6 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelIncluirCategoriaLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nomeCategoriaText3)
                     .addComponent(nomeCategoriaText1)
                     .addComponent(nomeCategoriaText)
                     .addComponent(nomeCategoriaText2))
@@ -121,10 +105,8 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
                     .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelIncluirCategoriaLayout.createSequentialGroup()
-                        .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 302, Short.MAX_VALUE)))
                 .addGap(32, 32, 32))
         );
         panelIncluirCategoriaLayout.setVerticalGroup(
@@ -142,19 +124,15 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
                 .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nomeCategoriaText2)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeCategoriaText3)
-                    .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(39, 39, 39))
         );
 
         nomeCategoriaText4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText4.setText("Produto:");
 
-        comboProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboProdutoActionPerformed(evt);
+        comboProduto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboProdutoItemStateChanged(evt);
             }
         });
 
@@ -173,31 +151,44 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
             }
         });
 
+        nomeCategoriaText3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        nomeCategoriaText3.setText("Categoria:");
+
+        comboCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboCategoriaItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
-                        .addComponent(itsolution_logo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nomeCategoriaText4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(title)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
+                        .addComponent(itsolution_logo))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(nomeCategoriaText3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nomeCategoriaText4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +199,10 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nomeCategoriaText4)
-                    .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nomeCategoriaText3)
+                        .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
@@ -238,12 +232,16 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
         setBounds((screenSize.width-650)/2, (screenSize.height-402)/2, 650, 402);
     }// </editor-fold>//GEN-END:initComponents
     
-    
         
     private void botaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarActionPerformed
 
+        //Categoria categoria = (Categoria)comboCategoria.getSelectedItem();
+        //Produto produto = (Produto)comboProduto.getSelectedItem();
         try {
             if (produtoController == null) {
+                produtoController = new ProdutoController();
+            }
+            if (categoriaController == null) {
                 produtoController = new ProdutoController();
             }
         } catch (Exception ex) {
@@ -253,54 +251,62 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
         
         
         try {
-            for (int i = 0; i < categorias.length; i++) {
-                if (categorias[i].getNome().equals(comboCategoria.getSelectedItem().toString())) {
-                    produtos[produtoAtual].setCategoria(categorias[i]);
-                    produtos[produtoAtual].setNome(txtNome.getText());
-                    produtos[produtoAtual].setDescricao(txtDescricao.getText());
-                    produtos[produtoAtual].setPreco(txtPreco.getText());
-                }
-            }
-            produtoController.edit(produtos[produtoAtual]);
-            JOptionPane.showMessageDialog(null, "Produto " + produtos[produtoAtual].getNome() + " alterado com sucesso.");
+            produto.setDescricao(txtDescricao.getText());
+            produto.setNome(txtNome.getText());
+            produto.setPreco(txtPreco.getText());
+            
+            produtoController.edit(produto);
+            JOptionPane.showMessageDialog(null, "Produto " + produto.getNome() + " alterado com sucesso.");
             new MatrizInicial().setVisible(true);
             dispose();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao atualizar produto: " + produtos[produtoAtual].getNome());
+            JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + produto.getNome());
         }
     }//GEN-LAST:event_botaoAlterarActionPerformed
-
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoActionPerformed
-
-    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_comboCategoriaActionPerformed
-
-    private void comboProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProdutoActionPerformed
-        for (int i = 0; i < produtos.length; i++) {
-            if (produtos[i].getNome().toString().equals(comboProduto.getSelectedItem().toString())){
-                produtoAtual = i;
-                txtNome.setText(produtos[i].getNome());
-                txtDescricao.setText(produtos[i].getDescricao());
-                txtPreco.setText(produtos[i].getPreco());
-                comboCategoria.setSelectedItem(produtos[i].getCategoria().getNome().toString());
-                
-            }
-        }
-    }//GEN-LAST:event_comboProdutoActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         dispose();
         new GUI.matriz.MatrizInicial().setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void comboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaItemStateChanged
+        for(Categoria categ: categorias){
+            if(categ.getNome().equals(comboCategoria.getSelectedItem())) {
+                categoria = categ;
+                setComboProduto(comboProduto);
+            }
+        }
+    }//GEN-LAST:event_comboCategoriaItemStateChanged
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            if (categoriaController == null) {
+                categoriaController = new CategoriaController();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
+            return;
+        }
+        categorias = categoriaController.findAll();
+        comboCategoria.removeAllItems();
+
+        for(Categoria categ: categorias){
+            comboCategoria.addItem(categ.getNome());
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void comboProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoItemStateChanged
+        if ( produto == null || produto != comboProduto.getSelectedItem()) {
+            produtos = (List)categoria.getProdutos();
+            produto = (Produto)comboProduto.getSelectedItem();
+        }
+        if(produto != null ){
+            txtNome.setText(produto.getNome());
+            txtDescricao.setText(produto.getDescricao());
+            txtPreco.setText(produto.getPreco());
+        }
+    }//GEN-LAST:event_comboProdutoItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAlterar;
@@ -331,6 +337,7 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
      * @param comboCategoria the comboCategoria to set
      */
     public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
+        this.comboCategoria = comboCategoria;
         try {
             if (categoriaController == null) {
                 categoriaController = new CategoriaController();
@@ -339,13 +346,16 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        categorias = categoriaController.findAll().toArray(new Categoria[0]);
+        categorias = categoriaController.findAll();
         comboCategoria.removeAllItems();
 
-        String[] itens = new String[categorias.length];
-        for (int i = 0; i < categorias.length; i++) {
-            itens[i] = categorias[i].getNome();
-            comboCategoria.addItem(itens[i]);
+        for(Categoria categ: categorias){
+            comboCategoria.addItem(categ.getNome());
+        }
+        for(Categoria categ: categorias){
+            if(categoria.getNome().equals(comboCategoria.getSelectedItem())) {
+                categoria = categ;
+            }
         }
     }
     /**
@@ -359,22 +369,28 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
      * @param comboProduto the comboProduto to set
      */
     public void setComboProduto(javax.swing.JComboBox comboProduto) {
+        this.comboProduto = comboProduto;
         try {
             if (produtoController == null) {
                 produtoController = new ProdutoController();
+            }
+            if (categoriaController == null){
+                categoriaController = new CategoriaController();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        produtos = produtoController.findAll().toArray(new Produto[0]);
-        comboProduto.removeAllItems();
-        String[] itens = new String[produtos.length];
-        for (int i = 0; i < produtos.length; i++) {
-            itens[i] = produtos[i].getNome();
-            comboProduto.addItem(itens[i]);
+        for(Categoria categ: categorias){
+            if(categ.getNome().equals(comboCategoria.getSelectedItem())){
+                categoria = categ;
+            }
         }
-        
+        produtos = (List)categoria.getProdutos();
+        comboProduto.removeAllItems();
+        for(Produto prod: produtos){
+            comboProduto.addItem(prod);
+        }
     }
     
     

@@ -307,8 +307,9 @@ public class MatrizInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCategoriaExcluirActionPerformed
 
     private void botaoProdutoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoExcluirActionPerformed
-        new GUI.matriz.produto.ExcluirProdutoGUI().setVisible(true);
         dispose();
+        new GUI.matriz.produto.ExcluirProdutoGUI().setVisible(true);
+        
     }//GEN-LAST:event_botaoProdutoExcluirActionPerformed
 
     /**

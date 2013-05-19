@@ -7,9 +7,11 @@ package GUI.matriz.produto;
 import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
 import controller.ProdutoController;
+import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
 import jpa.Produto;
+import jpa.facade.CategoriaFacadeRemote;
 
 
 /**
@@ -20,7 +22,8 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
-    private Categoria[] categorias;
+    private List<Categoria> categorias;
+    private Categoria categoria;
     
     /**
      * Creates new form ContatoGUI
@@ -28,6 +31,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
     
     public InserirProdutoGUI() {
         initComponents();
+        //setCategorias();
         setComboCategoria(comboCategoria);
     }
     
@@ -73,30 +77,18 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
         nomeCategoriaText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText.setText("Nome:");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-
         nomeCategoriaText1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText1.setText("Descrição:");
 
         nomeCategoriaText2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText2.setText("Preço:");
 
-        txtPreco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecoActionPerformed(evt);
-            }
-        });
-
         nomeCategoriaText3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText3.setText("Categoria:");
 
-        comboCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCategoriaActionPerformed(evt);
+        comboCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboCategoriaItemStateChanged(evt);
             }
         });
 
@@ -111,7 +103,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                         .addComponent(nomeCategoriaText3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 360, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelIncluirCategoriaLayout.createSequentialGroup()
                         .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomeCategoriaText1)
@@ -121,7 +113,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                         .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelIncluirCategoriaLayout.createSequentialGroup()
                                 .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 324, Short.MAX_VALUE))
                             .addComponent(txtNome)
                             .addComponent(txtDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -169,7 +161,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(itsolution_logo)
                     .addComponent(title))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
@@ -198,7 +190,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 451, Short.MAX_VALUE)
                 .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoCadastrar))
@@ -226,47 +218,39 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
         try {
             if (produtoController == null) {
                 produtoController = new ProdutoController();
+            } if ( categoriaController == null) {
+                categoriaController = new CategoriaController();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        
-        for (int i = 0; i < categorias.length; i++) {
-            if (categorias[i].getNome().equals(comboCategoria.getSelectedItem().toString())) {
-                produto = new Produto(txtNome.getText(), txtDescricao.getText(), txtPreco.getText(), categorias[i]);
-            }
-        }
-        
-        
+        produto = new Produto(txtNome.getText(), txtDescricao.getText(), txtPreco.getText());
+
         try {
-            produtoController.create(produto);
+            categoria.getProdutos().add(produto);
+            categoriaController.edit(categoria);
             JOptionPane.showMessageDialog(null, "Produto " + produto.getNome() + " cadastrado com sucesso.");
             new MatrizInicial().setVisible(true);
             dispose();
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao gravar produto: " + produto);
         }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoActionPerformed
-
-    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_comboCategoriaActionPerformed
-
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         dispose();
         new GUI.matriz.MatrizInicial().setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void comboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaItemStateChanged
+        for(Categoria categ: categorias){
+            if(categ.getNome().equals(comboCategoria.getSelectedItem())) {
+                categoria = categ;
+            }
+        }
+    }//GEN-LAST:event_comboCategoriaItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
@@ -295,6 +279,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
      * @param comboCategoria the comboCategoria to set
      */
     public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
+        this.comboCategoria = comboCategoria;
         try {
             if (categoriaController == null) {
                 categoriaController = new CategoriaController();
@@ -303,19 +288,22 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        categorias = categoriaController.findAll().toArray(new Categoria[0]);
+        categorias = categoriaController.findAll();
         comboCategoria.removeAllItems();
 
-        String[] itens = new String[categorias.length];
-        for (int i = 0; i < categorias.length; i++) {
-            itens[i] = categorias[i].getNome();
-            comboCategoria.addItem(itens[i]);
+        for(Categoria categ: categorias){
+            comboCategoria.addItem(categ.getNome());
+        }
+        for(Categoria categ: categorias){
+            if(categ.getNome().equals(comboCategoria.getSelectedItem())) {
+                categoria = categ;
+            }
         }
     }
-
-    /**
-     * @param comboCategoria comboCategoria to set
-     */
+    
+//    public void setCategorias(){
+//       categorias = categoriaController.findAll(); 
+//    }
     
 
 }
