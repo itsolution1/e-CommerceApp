@@ -55,7 +55,10 @@
                                value="${produto.id}">
                         <input type="submit"
                                name="submit"
-                               value="add to cart">
+                               value="+Carrinho">
+                        <input type="submit"
+                               name="submitList"
+                               value="+WishList">
                     </form>
                 </td>
             </tr>

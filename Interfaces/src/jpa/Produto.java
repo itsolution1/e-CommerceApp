@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -26,7 +24,8 @@ public class Produto implements Serializable, Cloneable {
     private Long id;
     private String nome;
     private String descricao;
-    private String preco;   
+    private String preco; 
+    private int quantidadeEstoque;
 
     public Produto() {
     }
@@ -111,5 +110,14 @@ public class Produto implements Serializable, Cloneable {
     public void setPreco(String preco) {
         this.preco = preco;
     }
+    
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+
 
 }
