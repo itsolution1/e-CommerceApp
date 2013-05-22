@@ -10,7 +10,7 @@ import controller.ProdutoController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
-import jpa.Filial;
+import jpa.ItemCarrinho;
 import jpa.Produto;
 
 /**
@@ -22,14 +22,14 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
     private FilialController    filialController    = null;
     private CategoriaController categoriaController = null;
     private ProdutoController   produtoController   = null;
-    private List<Filial>        filiaisProduto;
-    private List<Filial>        filiaisIncluir;
+    private List<ItemCarrinho>        filiaisProduto;
+    private List<ItemCarrinho>        filiaisIncluir;
     private List<Produto>       produtos;
     private List<Categoria>     categorias;
     private Categoria           categoria;
     private Produto             produto;
-    private Filial              filialProduto;
-    private Filial              filialIncluir;
+    private ItemCarrinho              filialProduto;
+    private ItemCarrinho              filialIncluir;
 
     
     /**
@@ -61,7 +61,7 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
         
         if (produto.getFiliais()!=null) {
             filiaisProduto = (List)produto.getFiliais();
-        Filial[] fil = produto.getFiliais().toArray(new Filial[0]);
+        ItemCarrinho[] fil = produto.getFiliais().toArray(new ItemCarrinho[0]);
         Object[][] objects = new Object[fil.length][2];
         for (int i = 0; i < fil.length; i++) {
             objects[i][0] = fil[i].getNome();
@@ -388,7 +388,7 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiliaisProdutoActionPerformed
 
     private void comboTodasFiliaisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboTodasFiliaisItemStateChanged
-        for(Filial f: filiaisIncluir){
+        for(ItemCarrinho f: filiaisIncluir){
             if(f.getNome().equals(comboTodasFiliais.getSelectedItem())) {
                 filialIncluir = f;
             }
@@ -396,7 +396,7 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboTodasFiliaisItemStateChanged
 
     private void comboFiliaisProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboFiliaisProdutoItemStateChanged
-        for(Filial f: filiaisProduto){
+        for(ItemCarrinho f: filiaisProduto){
             if(f.getNome().equals(comboFiliaisProduto.getSelectedItem())) {
                 filialProduto = f;
             }
@@ -481,11 +481,11 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
         filtrarFiliaisInclusao();
         comboFilial.removeAllItems();
 
-        for(Filial f: filiaisIncluir){
+        for(ItemCarrinho f: filiaisIncluir){
             comboFilial.addItem(f.getNome());
         }
         
-        for(Filial f: filiaisIncluir){
+        for(ItemCarrinho f: filiaisIncluir){
             if(f.getNome().equals(comboTodasFiliais.getSelectedItem())) {
                 filialIncluir = f;
             }
@@ -507,11 +507,11 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
         filiaisProduto = (List)produto.getFiliais();
         comboFiliaisProduto.removeAllItems();
         
-        for(Filial f: filiaisProduto) {
+        for(ItemCarrinho f: filiaisProduto) {
             comboFiliaisProduto.addItem(f.getNome());
         }
         
-        for(Filial f: filiaisProduto){
+        for(ItemCarrinho f: filiaisProduto){
             if(f.getNome().equals(comboFiliaisProduto.getSelectedItem())) {
                 filialProduto = f;
             }
@@ -520,7 +520,7 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
     }
     
     public void filtrarFiliaisInclusao(){
-        for(Filial f: filiaisProduto){
+        for(ItemCarrinho f: filiaisProduto){
             if( filiaisIncluir.contains(f) ){
                 filiaisIncluir.remove(f);
             }

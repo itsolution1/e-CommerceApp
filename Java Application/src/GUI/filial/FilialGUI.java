@@ -7,7 +7,7 @@ package GUI.filial;
 import controller.FilialController;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jpa.Filial;
+import jpa.ItemCarrinho;
 
 
 /**
@@ -17,8 +17,8 @@ import jpa.Filial;
 public class FilialGUI extends javax.swing.JFrame {
     
     private FilialController filialController = null;
-    private List<Filial> filiais;
-    public Filial filial;
+    private List<ItemCarrinho> filiais;
+    public ItemCarrinho filial;
     
     /**
      * Creates new form ContatoGUI
@@ -181,7 +181,7 @@ public class FilialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairSistemaActionPerformed
 
     private void comboFiliaisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboFiliaisItemStateChanged
-        for(Filial f: filiais){
+        for(ItemCarrinho f: filiais){
             if(f.getNome().equals(comboFiliais.getSelectedItem())) {
                 filial = f;
             }
@@ -221,11 +221,11 @@ public class FilialGUI extends javax.swing.JFrame {
         filiais = filialController.findAll();
         comboFiliais.removeAllItems();
         
-        for(Filial f: filiais){
+        for(ItemCarrinho f: filiais){
             comboFiliais.addItem(f.getNome());
         }
         
-        for ( Filial f: filiais ) {
+        for ( ItemCarrinho f: filiais ) {
             comboFiliais.addItem(f.getNome());
         }
         

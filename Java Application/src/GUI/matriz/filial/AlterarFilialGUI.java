@@ -6,7 +6,7 @@ package GUI.matriz.filial;
 
 import controller.FilialController;
 import javax.swing.JOptionPane;
-import jpa.Filial;
+import jpa.ItemCarrinho;
 
 /**
  *
@@ -15,7 +15,7 @@ import jpa.Filial;
 public class AlterarFilialGUI extends javax.swing.JFrame {
 
     private FilialController filialController = null;
-    private Filial[] filiais;
+    private ItemCarrinho[] filiais;
     //private String categoriaAtual;
 
     /**
@@ -246,7 +246,7 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
             return;
         }
         System.out.println("Criando array de categorias");
-        filiais = filialController.findAll().toArray(new Filial[0]);
+        filiais = filialController.findAll().toArray(new ItemCarrinho[0]);
         System.out.println("Removendo itens da lista");
         comboFilial.removeAllItems();
 

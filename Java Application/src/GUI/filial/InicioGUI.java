@@ -7,7 +7,7 @@ package GUI.filial;
 import GUI.matriz.filial.*;
 import controller.FilialController;
 import javax.swing.JOptionPane;
-import jpa.Filial;
+import jpa.ItemCarrinho;
 
 /**
  *
@@ -15,13 +15,13 @@ import jpa.Filial;
  */
 public class InicioGUI extends javax.swing.JFrame {
 
-    private Filial filial;
+    private ItemCarrinho filial;
     //private String categoriaAtual;
 
     /**
      * Creates new form ContatoGUI
      */
-    public InicioGUI(Filial filial) {
+    public InicioGUI(ItemCarrinho filial) {
         this.filial = filial;
         initComponents();
         title.setText("Filial " + this.filial.getNome());
@@ -41,8 +41,8 @@ public class InicioGUI extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         itsolution_logo = new javax.swing.JLabel();
         panelIncluirCategoria = new javax.swing.JPanel();
-        botaoVoltar1 = new javax.swing.JButton();
-        botaoVoltar2 = new javax.swing.JButton();
+        botaoGerenciarEstoque = new javax.swing.JButton();
+        botaoVender = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -56,32 +56,37 @@ public class InicioGUI extends javax.swing.JFrame {
         itsolution_logo.setText("ITSolution");
 
         panelIncluirCategoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        panelIncluirCategoria.setLayout(new java.awt.GridLayout());
+        panelIncluirCategoria.setLayout(new java.awt.GridLayout(1, 0));
 
-        botaoVoltar1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        botaoVoltar1.setText("Gerenciar Estoque");
-        botaoVoltar1.setToolTipText("");
-        botaoVoltar1.addMouseListener(new java.awt.event.MouseAdapter() {
+        botaoGerenciarEstoque.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        botaoGerenciarEstoque.setText("Gerenciar Estoque");
+        botaoGerenciarEstoque.setToolTipText("");
+        botaoGerenciarEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                botaoVoltar1MouseReleased(evt);
+                botaoGerenciarEstoqueMouseReleased(evt);
             }
         });
-        botaoVoltar1.addActionListener(new java.awt.event.ActionListener() {
+        botaoGerenciarEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoVoltar1ActionPerformed(evt);
+                botaoGerenciarEstoqueActionPerformed(evt);
             }
         });
-        panelIncluirCategoria.add(botaoVoltar1);
+        panelIncluirCategoria.add(botaoGerenciarEstoque);
 
-        botaoVoltar2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        botaoVoltar2.setText("Vender");
-        botaoVoltar2.setToolTipText("");
-        botaoVoltar2.addMouseListener(new java.awt.event.MouseAdapter() {
+        botaoVender.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        botaoVender.setText("Vender");
+        botaoVender.setToolTipText("");
+        botaoVender.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                botaoVoltar2MouseReleased(evt);
+                botaoVenderMouseReleased(evt);
             }
         });
-        panelIncluirCategoria.add(botaoVoltar2);
+        botaoVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVenderActionPerformed(evt);
+            }
+        });
+        panelIncluirCategoria.add(botaoVender);
 
         botaoVoltar.setText("Voltar");
         botaoVoltar.setToolTipText("");
@@ -146,22 +151,26 @@ public class InicioGUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_botaoVoltarMouseReleased
 
-    private void botaoVoltar1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltar1MouseReleased
+    private void botaoGerenciarEstoqueMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoGerenciarEstoqueMouseReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoVoltar1MouseReleased
+    }//GEN-LAST:event_botaoGerenciarEstoqueMouseReleased
 
-    private void botaoVoltar2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVoltar2MouseReleased
+    private void botaoVenderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVenderMouseReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoVoltar2MouseReleased
+    }//GEN-LAST:event_botaoVenderMouseReleased
 
-    private void botaoVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltar1ActionPerformed
+    private void botaoGerenciarEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenciarEstoqueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoVoltar1ActionPerformed
+    }//GEN-LAST:event_botaoGerenciarEstoqueActionPerformed
+
+    private void botaoVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoVenderActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoGerenciarEstoque;
+    private javax.swing.JButton botaoVender;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JButton botaoVoltar1;
-    private javax.swing.JButton botaoVoltar2;
     private javax.swing.JLabel itsolution_logo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelIncluirCategoria;
