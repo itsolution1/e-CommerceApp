@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/sample</jta-data-source>
     <class>jpa.Categoria</class>
+    <class>jpa.Filial</class>
     <class>jpa.Produto</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
