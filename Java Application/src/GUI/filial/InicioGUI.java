@@ -12,6 +12,7 @@ import jpa.ItemCarrinho;
 /**
  *
  * @author GPinzegher
+ * 
  */
 public class InicioGUI extends javax.swing.JFrame {
 
