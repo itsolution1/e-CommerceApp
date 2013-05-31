@@ -5,10 +5,13 @@
 package jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,8 +27,10 @@ public class Produto implements Serializable, Cloneable {
     private Long id;
     private String nome;
     private String descricao;
-    private String preco; 
-    private int quantidadeEstoque;
+    private String preco;
+    
+    @OneToMany(fetch=FetchType.EAGER)  
+    private Collection<Filial> filiais;
 
     public Produto() {
     }
@@ -34,6 +39,7 @@ public class Produto implements Serializable, Cloneable {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.filiais = null;
 
     }
 
@@ -110,14 +116,40 @@ public class Produto implements Serializable, Cloneable {
     public void setPreco(String preco) {
         this.preco = preco;
     }
+
+    /**
+     * @return the filial
+     */
+    public Collection<Filial> getFilial() {
+        return getFiliais();
+    }
+
+    /**
+     * @param filial the filial to set
+     */
+    public void setFilial(Collection<Filial> filial) {
+        this.setFiliais(filial);
+    }
     
-    public int getQuantidadeEstoque() {
-        return quantidadeEstoque;
+    public int getTotalProdutos(){
+        int contador = 0;
+        for (Filial filial: getFiliais()) {
+            contador += filial.getQuantidadeEstoque();
+        }
+        return contador;
     }
 
-    public void setQuantidadeEstoque(int quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
+    /**
+     * @return the filiais
+     */
+    public Collection<Filial> getFiliais() {
+        return filiais;
     }
 
-
+    /**
+     * @param filiais the filiais to set
+     */
+    public void setFiliais(Collection<Filial> filiais) {
+        this.filiais = filiais;
+    }
 }

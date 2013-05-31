@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
 import jpa.Produto;
-import jpa.facade.CategoriaFacadeRemote;
 
 
 /**

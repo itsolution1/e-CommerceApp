@@ -18,35 +18,23 @@ import javax.persistence.OneToMany;
  * @author juliano
  */
 @Entity
-public class Categoria implements Serializable, Cloneable {
+public class ItemPedido implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nome;
+    private short quantidade;
     
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Produto> produtos;
+    private Produto produto;
 
-    public Categoria() {
+    public ItemPedido() {
     }
 
-    public Categoria(String nome) {
-        this.nome = nome;
-    }
-
-    public Categoria(String nome, Long id) {
-        this.nome = nome;
-        this.id = id;
-    }
-
-    public Collection<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(Collection<Produto> produtos) {
-        this.produtos = produtos;
+    public ItemPedido(Produto produto, short quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
     }
 
     public Long getId() {
@@ -55,14 +43,6 @@ public class Categoria implements Serializable, Cloneable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     @Override
@@ -78,7 +58,7 @@ public class Categoria implements Serializable, Cloneable {
         if (!(object instanceof Contato)) {
             return false;
         }
-        Categoria other = (Categoria) object;
+        ItemPedido other = (ItemPedido) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,11 +67,39 @@ public class Categoria implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return nome;
+        return id.toString();
     }
 
-    @Override
-    public Categoria clone() {
-        return new Categoria(this.nome);
+//    @Override
+//    public ItemPedido clone() {
+//        return new ItemPedido(this.nome);
+//    }
+
+    /**
+     * @return the produto
+     */
+    public Produto getProduto() {
+        return produto;
+    }
+
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    /**
+     * @return the quantidade
+     */
+    public short getQuantidade() {
+        return quantidade;
+    }
+
+    /**
+     * @param quantidade the quantidade to set
+     */
+    public void setQuantidade(short quantidade) {
+        this.quantidade = quantidade;
     }
 }

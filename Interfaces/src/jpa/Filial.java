@@ -5,48 +5,31 @@
 package jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
- * @author juliano
+ * @author GPinzegher
  */
-@Entity
-public class Categoria implements Serializable, Cloneable {
 
+@Entity
+public class Filial  implements Serializable, Cloneable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    
-    @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Produto> produtos;
+    private int quantidadeEstoque;
 
-    public Categoria() {
+    public Filial() {
     }
 
-    public Categoria(String nome) {
+    public Filial(String nome) {
         this.nome = nome;
-    }
-
-    public Categoria(String nome, Long id) {
-        this.nome = nome;
-        this.id = id;
-    }
-
-    public Collection<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(Collection<Produto> produtos) {
-        this.produtos = produtos;
     }
 
     public Long getId() {
@@ -75,10 +58,10 @@ public class Categoria implements Serializable, Cloneable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contato)) {
+        if (!(object instanceof Filial)) {
             return false;
         }
-        Categoria other = (Categoria) object;
+        Filial other = (Filial) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -91,7 +74,16 @@ public class Categoria implements Serializable, Cloneable {
     }
 
     @Override
-    public Categoria clone() {
-        return new Categoria(this.nome);
+    public Filial clone() {
+        return new Filial(this.nome);
     }
+    
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+    
 }
