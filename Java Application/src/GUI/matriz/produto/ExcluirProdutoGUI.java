@@ -369,9 +369,6 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
         return comboProduto;
     }
 
-    /**
-     * @param comboProduto the comboProduto to set
-     */
     public void setComboProduto(javax.swing.JComboBox comboProduto) {
         this.comboProduto = comboProduto;
         try {
