@@ -6,7 +6,7 @@ package GUI.matriz.filial;
 
 import controller.FilialController;
 import javax.swing.JOptionPane;
-import jpa.ItemCarrinho;
+import jpa.Filial;
 
 /**
  *
@@ -35,7 +35,7 @@ public class InserirFilialGUI extends javax.swing.JFrame {
             botaoCadastrar.setEnabled(false);
             return;
         }
-        ItemCarrinho[] filial = filialController.findAll().toArray(new ItemCarrinho[0]);
+        Filial[] filial = filialController.findAll().toArray(new Filial[0]);
         Object[][] objects = new Object[filial.length][2];
         for (int i = 0; i < filial.length; i++) {
             objects[i][0] = filial[i].getNome();
@@ -193,7 +193,7 @@ public class InserirFilialGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        ItemCarrinho filial = new ItemCarrinho(txtNome.getText());
+        Filial filial = new Filial(txtNome.getText());
         try {
             
             filialController.create(filial);

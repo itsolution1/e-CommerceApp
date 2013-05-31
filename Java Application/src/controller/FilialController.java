@@ -7,7 +7,7 @@ package controller;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.InitialContext;
-import jpa.ItemCarrinho;
+import jpa.Filial;
 import jpa.facade.FilialFacadeRemote;
 
 /**
@@ -25,23 +25,23 @@ public class FilialController {
         filialFacade = (FilialFacadeRemote) ctx.lookup("ejb/FilialFacade");
     }
 
-    public void create(ItemCarrinho entity) {
+    public void create(Filial entity) {
         filialFacade.create(entity);
     }
     
-    public void edit(ItemCarrinho entity) {
+    public void edit(Filial entity) {
         filialFacade.edit(entity);
     }
     
-    public void remove(ItemCarrinho entity) {
+    public void remove(Filial entity) {
         filialFacade.remove(entity);
     }
 
-    public List<ItemCarrinho> findAll() {
+    public List<Filial> findAll() {
         return (filialFacade.findAll());
     }
     
-    public ItemCarrinho find(Long id){
+    public Filial find(Long id){
         return (filialFacade.find(id));
     }
 }

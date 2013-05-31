@@ -7,7 +7,7 @@ package GUI.filial;
 import GUI.matriz.filial.*;
 import controller.FilialController;
 import javax.swing.JOptionPane;
-import jpa.ItemCarrinho;
+import jpa.Filial;
 
 /**
  *
@@ -16,13 +16,13 @@ import jpa.ItemCarrinho;
  */
 public class InicioGUI extends javax.swing.JFrame {
 
-    private ItemCarrinho filial;
+    private Filial filial;
     //private String categoriaAtual;
 
     /**
      * Creates new form ContatoGUI
      */
-    public InicioGUI(ItemCarrinho filial) {
+    public InicioGUI(Filial filial) {
         this.filial = filial;
         initComponents();
         title.setText("Filial " + this.filial.getNome());

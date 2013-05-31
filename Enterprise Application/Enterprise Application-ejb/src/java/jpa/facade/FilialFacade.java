@@ -7,7 +7,7 @@ package jpa.facade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import jpa.ItemCarrinho;
+import jpa.Filial;
 
 /**
  *
@@ -15,7 +15,7 @@ import jpa.ItemCarrinho;
  */
 
 @Stateless(mappedName = "ejb/FilialFacade")
-public class FilialFacade extends AbstractFacade<ItemCarrinho> implements FilialFacadeRemote {
+public class FilialFacade extends AbstractFacade<Filial> implements FilialFacadeRemote {
     @PersistenceContext(unitName = "Enterprise_Application-ejbPU")
     private EntityManager em;
 
@@ -25,7 +25,7 @@ public class FilialFacade extends AbstractFacade<ItemCarrinho> implements Filial
     }
 
     public FilialFacade() {
-        super(ItemCarrinho.class);
+        super(Filial.class);
     }
     
 }

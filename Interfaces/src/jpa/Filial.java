@@ -16,7 +16,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class ItemCarrinho  implements Serializable, Cloneable {
+public class Filial  implements Serializable, Cloneable {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -25,10 +25,10 @@ public class ItemCarrinho  implements Serializable, Cloneable {
     private String nome;
     private int quantidadeEstoque;
 
-    public ItemCarrinho() {
+    public Filial() {
     }
 
-    public ItemCarrinho(String nome) {
+    public Filial(String nome) {
         this.nome = nome;
     }
 
@@ -58,10 +58,10 @@ public class ItemCarrinho  implements Serializable, Cloneable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ItemCarrinho)) {
+        if (!(object instanceof Filial)) {
             return false;
         }
-        ItemCarrinho other = (ItemCarrinho) object;
+        Filial other = (Filial) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -74,8 +74,8 @@ public class ItemCarrinho  implements Serializable, Cloneable {
     }
 
     @Override
-    public ItemCarrinho clone() {
-        return new ItemCarrinho(this.nome);
+    public Filial clone() {
+        return new Filial(this.nome);
     }
     
     public int getQuantidadeEstoque() {

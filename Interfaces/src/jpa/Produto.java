@@ -30,7 +30,7 @@ public class Produto implements Serializable, Cloneable {
     private String preco;
     
     @OneToMany(fetch=FetchType.EAGER)  
-    private Collection<ItemCarrinho> filiais;
+    private Collection<Filial> filiais;
 
     public Produto() {
     }
@@ -120,20 +120,20 @@ public class Produto implements Serializable, Cloneable {
     /**
      * @return the filial
      */
-    public Collection<ItemCarrinho> getFilial() {
+    public Collection<Filial> getFilial() {
         return getFiliais();
     }
 
     /**
      * @param filial the filial to set
      */
-    public void setFilial(Collection<ItemCarrinho> filial) {
+    public void setFilial(Collection<Filial> filial) {
         this.setFiliais(filial);
     }
     
     public int getTotalProdutos(){
         int contador = 0;
-        for (ItemCarrinho filial: getFiliais()) {
+        for (Filial filial: getFiliais()) {
             contador += filial.getQuantidadeEstoque();
         }
         return contador;
@@ -142,14 +142,14 @@ public class Produto implements Serializable, Cloneable {
     /**
      * @return the filiais
      */
-    public Collection<ItemCarrinho> getFiliais() {
+    public Collection<Filial> getFiliais() {
         return filiais;
     }
 
     /**
      * @param filiais the filiais to set
      */
-    public void setFiliais(Collection<ItemCarrinho> filiais) {
+    public void setFiliais(Collection<Filial> filiais) {
         this.filiais = filiais;
     }
 }

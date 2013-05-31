@@ -6,7 +6,7 @@ package jpa.facade;
 
 import java.util.List;
 import javax.ejb.Remote;
-import jpa.ItemCarrinho;
+import jpa.Filial;
 
 /**
  *
@@ -15,17 +15,17 @@ import jpa.ItemCarrinho;
 @Remote
 public interface FilialFacadeRemote {
 
-    void create(ItemCarrinho filial);
+    void create(Filial filial);
 
-    void edit(ItemCarrinho categoria);
+    void edit(Filial categoria);
 
-    void remove(ItemCarrinho categoria);
+    void remove(Filial categoria);
 
-    ItemCarrinho find(Object id);
+    Filial find(Object id);
 
-    List<ItemCarrinho> findAll();
+    List<Filial> findAll();
 
-    List<ItemCarrinho> findRange(int[] range);
+    List<Filial> findRange(int[] range);
 
     int count();
     
