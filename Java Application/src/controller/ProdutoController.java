@@ -4,11 +4,11 @@
  */
 package controller;
 
-import jpa.Produto;
-import jpa.facade.ProdutoFacadeRemote;
 import java.util.List;
 import java.util.Properties;
 import javax.naming.InitialContext;
+import jpa.Produto;
+import jpa.facade.ProdutoFacadeRemote;
 
 /**
  *
