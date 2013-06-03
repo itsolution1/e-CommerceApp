@@ -15,7 +15,7 @@ import jpa.Produto;
 
 /**
  *
- * @author Calebe de Paula Bianchini
+ * @author GPinzegher
  */
 public class InserirProdutoGUI extends javax.swing.JFrame {
     
@@ -234,7 +234,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
             dispose();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao gravar produto: " + produto);
+            JOptionPane.showMessageDialog(this, "Erro ao gravar produto: " + produto.getNome());
         }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
