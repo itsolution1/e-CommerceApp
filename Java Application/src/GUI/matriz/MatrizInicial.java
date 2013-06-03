@@ -14,6 +14,7 @@ import GUI.matriz.produto.InserirProdutoGUI;
 /**
  *
  * @author GPinzegher
+ * 
  */
 public class MatrizInicial extends javax.swing.JFrame {
 
