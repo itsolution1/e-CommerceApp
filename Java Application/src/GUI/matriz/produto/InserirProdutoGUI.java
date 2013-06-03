@@ -15,7 +15,7 @@ import jpa.Produto;
 
 /**
  *
- * @author Calebe de Paula Bianchini
+ * @author GPinzegher
  */
 public class InserirProdutoGUI extends javax.swing.JFrame {
     
