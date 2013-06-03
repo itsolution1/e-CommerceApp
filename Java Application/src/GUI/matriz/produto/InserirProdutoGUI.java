@@ -224,7 +224,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        produto = new Produto(txtNome.getText(), txtDescricao.getText(), txtPreco.getText());
+        produto = new Produto(txtNome.getText(), txtDescricao.getText(), txtPreco.getText(), 0);
 
         try {
             categoria.getProdutos().add(produto);
