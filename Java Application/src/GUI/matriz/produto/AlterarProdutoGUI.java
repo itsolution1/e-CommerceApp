@@ -7,6 +7,7 @@ package GUI.matriz.produto;
 import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
 import controller.ProdutoController;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
@@ -22,7 +23,7 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
     private List<Produto> produtos;
-    private List<Categoria> categorias;
+    private Collection<Categoria> categorias;
     private Categoria categoria;
     private Produto produto;
     

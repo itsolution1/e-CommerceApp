@@ -217,6 +217,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNome">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="nomeCategoriaText1">
               <Properties>
@@ -227,6 +231,10 @@
               </Properties>
             </Component>
             <Component class="java.awt.TextArea" name="txtDescricao">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="nomeCategoriaText2">
               <Properties>
@@ -237,6 +245,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPreco">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="numeroQuantidade">
             </Component>

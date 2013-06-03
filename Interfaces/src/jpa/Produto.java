@@ -138,14 +138,6 @@ public class Produto implements Serializable, Cloneable {
     public void setFilial(Collection<Filial> filial) {
         this.setFiliais(filial);
     }
-    
-    public int getTotalProdutos(){
-        int contador = 0;
-        for (Filial filial: getFiliais()) {
-            contador += filial.getQuantidadeEstoque();
-        }
-        return contador;
-    }
 
     /**
      * @return the filiais

@@ -5,10 +5,13 @@
 package jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,8 +26,10 @@ public class Filial  implements Serializable, Cloneable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    private int quantidadeEstoque;
-
+   
+    @OneToMany(fetch = FetchType.EAGER)
+    private Collection<Categoria> categorias;
+    
     public Filial() {
     }
 
@@ -77,13 +82,18 @@ public class Filial  implements Serializable, Cloneable {
     public Filial clone() {
         return new Filial(this.nome);
     }
-    
-    public int getQuantidadeEstoque() {
-        return quantidadeEstoque;
+    /**
+     * @return the categorias
+     */
+    public Collection<Categoria> getCategorias() {
+        return categorias;
     }
 
-    public void setQuantidadeEstoque(int quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
+    /**
+     * @param categorias the categorias to set
+     */
+    public void setCategorias(Collection<Categoria> categorias) {
+        this.categorias = categorias;
     }
     
 }

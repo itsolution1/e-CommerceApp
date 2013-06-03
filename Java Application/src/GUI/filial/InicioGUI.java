@@ -161,7 +161,8 @@ public class InicioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVenderMouseReleased
 
     private void botaoGerenciarEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenciarEstoqueActionPerformed
-        // TODO add your handling code here:
+        new GUI.filial.estoque.EstoqueProdutoGUI(filial).setVisible(true);
+        dispose();
     }//GEN-LAST:event_botaoGerenciarEstoqueActionPerformed
 
     private void botaoVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVenderActionPerformed

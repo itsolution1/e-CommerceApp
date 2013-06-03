@@ -4,35 +4,36 @@
  */
 package GUI.filial.estoque;
 
-import GUI.matriz.produto.*;
-import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
 import controller.ProdutoController;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
+import jpa.Filial;
 import jpa.Produto;
 
 
 /**
  *
- * @author Calebe de Paula Bianchini
+ * @author GPinzegher
  */
 public class EstoqueProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
-    private List<Produto> produtos;
-    private List<Categoria> categorias;
+    private Collection<Produto> produtos;
+    private Collection<Categoria> categorias;
     private Categoria categoria;
     private Produto produto;
-    
+    private Filial filial;
     
     /**
      * Creates new form ContatoGUI
      */
     
-    public EstoqueProdutoGUI() {
+    public EstoqueProdutoGUI(Filial filial) {
+        this.filial = filial;
         initComponents();
         setComboCategoria(comboCategoria);
         setComboProduto(comboProduto);
@@ -87,11 +88,20 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         nomeCategoriaText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText.setText("Nome:");
 
+        txtNome.setEditable(false);
+        txtNome.setEnabled(false);
+
         nomeCategoriaText1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText1.setText("Descrição:");
 
+        txtDescricao.setEditable(false);
+        txtDescricao.setEnabled(false);
+
         nomeCategoriaText2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText2.setText("Preço:");
+
+        txtPreco.setEditable(false);
+        txtPreco.setEnabled(false);
 
         labelQuantidade.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelQuantidade.setText("Quantidade:");
@@ -278,8 +288,8 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
             produto.setQuantidade(Integer.parseInt(numeroQuantidade.getValue().toString()));
             
             produtoController.edit(produto);
-            JOptionPane.showMessageDialog(null, "Produto " + produto.getNome() + " alterado com sucesso.");
-            new MatrizInicial().setVisible(true);
+            JOptionPane.showMessageDialog(null, "Estoque do produto " + produto.getNome() + " alterado com sucesso.");
+            new GUI.filial.InicioGUI(filial).setVisible(true);
             dispose();
             
         } catch (Exception e) {
@@ -289,7 +299,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         dispose();
-        new GUI.matriz.MatrizInicial().setVisible(true);
+        new GUI.filial.InicioGUI(filial).setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void comboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaItemStateChanged
@@ -362,6 +372,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
      * @param comboCategoria the comboCategoria to set
      */
     public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
+        
         this.comboCategoria = comboCategoria;
         try {
             if (categoriaController == null) {
