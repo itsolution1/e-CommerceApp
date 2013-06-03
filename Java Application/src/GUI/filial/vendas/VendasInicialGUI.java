@@ -38,44 +38,44 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     /**
      * Creates new form ContatoGUI
      */
-    public VendasInicialGUI(ItemCarrinho filialEscolhida) {
-        initComponents();
-        setComboCategoria(comboCategoriaIncluir);
-        setComboProduto(comboProdutoIncluir);
-        updateTable();
-        carrinho = new Carrinho(filialEscolhida);
-    }
-    
-    //tabela com as categorias
-    private void updateTable() {
-        try {
-            if (filialController == null) {
-                filialController = new FilialController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            botaoIncluirProduto.setEnabled(false);
-            return;
-        }
-        
-        listaCarrinho = carrinho.getItems();
-        if ( listaCarrinho !=null ) {
-            //filiaisProduto = (List)produto.getFiliais();
-            ItemCarrinho[] vetorItemCarinho = produto.getFiliais().toArray(new ItemCarrinho[0]);
-            Object[][] objects = new Object[vetorItemCarinho.length][2];
-            
-            for (int i = 0; i < vetorItemCarinho.length; i++) {
-                objects[i][0] = vetorItemCarinho[i].getProduto().getNome();
-                objects[i][1] = vetorItemCarinho[i].getQuantidade();
-        }
-        tblFiliais.setModel(new javax.swing.table.DefaultTableModel(
-                objects,
-                new String[]{ "Produto", "Quantidade" }));
-        } else return;
-        
-        //txtNome.setText("");
-        
-    }
+//    public VendasInicialGUI(ItemCarrinho filialEscolhida) {
+//        initComponents();
+//        setComboCategoria(comboCategoriaIncluir);
+//        setComboProduto(comboProdutoIncluir);
+//        updateTable();
+//        carrinho = new Carrinho(filialEscolhida);
+//    }
+//    
+//    //tabela com as categorias
+//    private void updateTable() {
+//        try {
+//            if (filialController == null) {
+//                filialController = new FilialController();
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
+//            botaoIncluirProduto.setEnabled(false);
+//            return;
+//        }
+//        
+//        listaCarrinho = carrinho.getItems();
+//        if ( listaCarrinho !=null ) {
+//            //filiaisProduto = (List)produto.getFiliais();
+//            ItemCarrinho[] vetorItemCarinho = produto.getFiliais().toArray(new ItemCarrinho[0]);
+//            Object[][] objects = new Object[vetorItemCarinho.length][2];
+//            
+//            for (int i = 0; i < vetorItemCarinho.length; i++) {
+//                objects[i][0] = vetorItemCarinho[i].getProduto().getNome();
+//                objects[i][1] = vetorItemCarinho[i].getQuantidade();
+//        }
+//        tblFiliais.setModel(new javax.swing.table.DefaultTableModel(
+//                objects,
+//                new String[]{ "Produto", "Quantidade" }));
+//        } else return;
+//        
+//        //txtNome.setText("");
+//        
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -350,14 +350,14 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void comboProdutoIncluirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoIncluirItemStateChanged
-        if ( produto == null || produto != comboProdutoIncluir.getSelectedItem()) {
-            produtos = (List)categoria.getProdutos();
-            produto = (Produto)comboProdutoIncluir.getSelectedItem();
-        }
-        if(produto != null ){
-            updateTable();
-            //setComboFilialRetirar
-        }
+//        if ( produto == null || produto != comboProdutoIncluir.getSelectedItem()) {
+//            produtos = (List)categoria.getProdutos();
+//            produto = (Produto)comboProdutoIncluir.getSelectedItem();
+//        }
+//        if(produto != null ){
+//            updateTable();
+//            //setComboFilialRetirar
+//        }
     }//GEN-LAST:event_comboProdutoIncluirItemStateChanged
 
     private void comboProdutoIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProdutoIncluirActionPerformed
@@ -365,23 +365,23 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoIncluirActionPerformed
 
     private void comboCategoriaIncluirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaIncluirItemStateChanged
-        for(Categoria categ: categorias){
-            if(categ.getNome().equals(comboCategoriaIncluir.getSelectedItem())) {
-                categoria = categ;
-                setComboProduto(comboProdutoIncluir);
-            }
-        }
+//        for(Categoria categ: categorias){
+//            if(categ.getNome().equals(comboCategoriaIncluir.getSelectedItem())) {
+//                categoria = categ;
+//                setComboProduto(comboProdutoIncluir);
+//            }
+//        }
     }//GEN-LAST:event_comboCategoriaIncluirItemStateChanged
 
     private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
-        ItemCarrinho ic = new ItemCarrinho(produto, (short)contadorIncluir.getValue());
-        
-        if ( carrinho.getItems().contains(ic) ) {
-            JOptionPane.showMessageDialog(null, "O produto " + produto.getNome() + " já está no carrinho.");
-        } else {
-            carrinho.adicionarItem(ic);
-            updateTable();
-        }
+//        ItemCarrinho ic = new ItemCarrinho(produto, (short)contadorIncluir.getValue());
+//        
+//        if ( carrinho.getItems().contains(ic) ) {
+//            JOptionPane.showMessageDialog(null, "O produto " + produto.getNome() + " já está no carrinho.");
+//        } else {
+//            carrinho.adicionarItem(ic);
+//            updateTable();
+//        }
 
     }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
 
@@ -390,11 +390,11 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoRetirarActionPerformed
 
     private void comboProdutoRetirarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoRetirarItemStateChanged
-        for(ItemCarrinho f: filiaisProduto){
-            if(f.getProduto().getNome().equals(comboProdutoRetirar.getSelectedItem())) {
-                filialProduto = f;
-            }
-        }
+//        for(ItemCarrinho f: filiaisProduto){
+//            if(f.getProduto().getNome().equals(comboProdutoRetirar.getSelectedItem())) {
+//                filialProduto = f;
+//            }
+//        }
     }//GEN-LAST:event_comboProdutoRetirarItemStateChanged
 
     private void botaoRetirarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetirarProdutoActionPerformed
@@ -402,7 +402,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRetirarProdutoActionPerformed
 
     private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
-        Pedido ped = new Pedido();
+        //Pedido ped = new Pedido();
     }//GEN-LAST:event_botaoFinalizarActionPerformed
 
     private void comboCategoriaIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaIncluirActionPerformed
@@ -413,69 +413,69 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoFinalizarMouseReleased
 
-    public javax.swing.JComboBox getComboCategoria() {
-        return comboCategoriaIncluir;
-    }
-    /**
-     * @param comboCategoria the comboCategoria to set
-     */
-    public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
-        this.comboCategoriaIncluir = comboCategoria;
-        try {
-            if (categoriaController == null) {
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        categorias = categoriaController.findAll();
-        comboCategoria.removeAllItems();
-
-        for(Categoria categ: categorias){
-            comboCategoria.addItem(categ.getNome());
-        }
-        for(Categoria categ: categorias){
-            if(categoria.getNome().equals(comboCategoria.getSelectedItem())) {
-                categoria = categ;
-            }
-        }
-    }
-    /**
-     * @return the comboProduto
-     */
-    public javax.swing.JComboBox getComboProduto() {
-        return comboProdutoIncluir;
-    }
-
-    /**
-     * @param comboProduto the comboProduto to set
-     */
-    
-    public void setComboProduto(javax.swing.JComboBox comboProduto) {
-        this.comboProdutoIncluir = comboProduto;
-        try {
-            if (produtoController == null) {
-                produtoController = new ProdutoController();
-            }
-            if (categoriaController == null){
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        for(Categoria categ: categorias){
-            if(categ.getNome().equals(comboCategoriaIncluir.getSelectedItem())){
-                categoria = categ;
-            }
-        }
-        produtos = (List)categoria.getProdutos();
-        comboProduto.removeAllItems();
-        for(Produto prod: produtos){
-            comboProduto.addItem(prod);
-        }
-    }
+//    public javax.swing.JComboBox getComboCategoria() {
+//        return comboCategoriaIncluir;
+//    }
+//    /**
+//     * @param comboCategoria the comboCategoria to set
+//     */
+//    public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
+//        this.comboCategoriaIncluir = comboCategoria;
+//        try {
+//            if (categoriaController == null) {
+//                categoriaController = new CategoriaController();
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
+//            return;
+//        }
+//        categorias = categoriaController.findAll();
+//        comboCategoria.removeAllItems();
+//
+//        for(Categoria categ: categorias){
+//            comboCategoria.addItem(categ.getNome());
+//        }
+//        for(Categoria categ: categorias){
+//            if(categoria.getNome().equals(comboCategoria.getSelectedItem())) {
+//                categoria = categ;
+//            }
+//        }
+//    }
+//    /**
+//     * @return the comboProduto
+//     */
+//    public javax.swing.JComboBox getComboProduto() {
+//        return comboProdutoIncluir;
+//    }
+//
+//    /**
+//     * @param comboProduto the comboProduto to set
+//     */
+//    
+//    public void setComboProduto(javax.swing.JComboBox comboProduto) {
+//        this.comboProdutoIncluir = comboProduto;
+//        try {
+//            if (produtoController == null) {
+//                produtoController = new ProdutoController();
+//            }
+//            if (categoriaController == null){
+//                categoriaController = new CategoriaController();
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
+//            return;
+//        }
+//        for(Categoria categ: categorias){
+//            if(categ.getNome().equals(comboCategoriaIncluir.getSelectedItem())){
+//                categoria = categ;
+//            }
+//        }
+//        produtos = (List)categoria.getProdutos();
+//        comboProduto.removeAllItems();
+//        for(Produto prod: produtos){
+//            comboProduto.addItem(prod);
+//        }
+//    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
