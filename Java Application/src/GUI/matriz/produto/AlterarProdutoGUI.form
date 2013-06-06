@@ -235,6 +235,7 @@
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="comboProdutoItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboProdutoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botaoVoltar">

@@ -7,6 +7,7 @@ package GUI.matriz.produto;
 import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
 import controller.ProdutoController;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
@@ -21,7 +22,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
-    private List<Categoria> categorias;
+    private Collection<Categoria> categorias;
     private Categoria categoria;
     
     /**
@@ -88,6 +89,11 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
         comboCategoria.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboCategoriaItemStateChanged(evt);
+            }
+        });
+        comboCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCategoriaActionPerformed(evt);
             }
         });
 
@@ -160,7 +166,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(itsolution_logo)
                     .addComponent(title))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
@@ -251,6 +257,10 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboCategoriaItemStateChanged
 
+    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoVoltar;
@@ -278,7 +288,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
      * @param comboCategoria the comboCategoria to set
      */
     public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
-        this.comboCategoria = comboCategoria;
+        
         try {
             if (categoriaController == null) {
                 categoriaController = new CategoriaController();
@@ -298,6 +308,7 @@ public class InserirProdutoGUI extends javax.swing.JFrame {
                 categoria = categ;
             }
         }
+        this.comboCategoria = comboCategoria;
     }
     
 //    public void setCategorias(){

@@ -72,7 +72,7 @@
                                   <Component id="nomeCategoriaText3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboCategoria" min="-2" pref="163" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="69" max="32767" attributes="0"/>
                                   <Component id="nomeCategoriaText4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="comboProduto" min="-2" pref="217" max="-2" attributes="0"/>
@@ -105,7 +105,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="panelIncluirCategoria" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="botaoAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botaoVoltar" alignment="3" min="-2" max="-2" attributes="0"/>

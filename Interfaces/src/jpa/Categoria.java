@@ -29,6 +29,7 @@ public class Categoria implements Serializable, Cloneable {
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<Produto> produtos;
 
+
     public Categoria() {
     }
 

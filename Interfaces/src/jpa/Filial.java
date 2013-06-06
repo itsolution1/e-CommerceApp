@@ -28,7 +28,7 @@ public class Filial  implements Serializable, Cloneable {
     private String nome;
    
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Categoria> categorias;
+    private Collection<Produto> produtos;
     
     public Filial() {
     }
@@ -82,18 +82,20 @@ public class Filial  implements Serializable, Cloneable {
     public Filial clone() {
         return new Filial(this.nome);
     }
+
     /**
-     * @return the categorias
+     * @return the produtos
      */
-    public Collection<Categoria> getCategorias() {
-        return categorias;
+    public Collection<Produto> getProdutos() {
+        return produtos;
     }
 
     /**
-     * @param categorias the categorias to set
+     * @param produtos the produtos to set
      */
-    public void setCategorias(Collection<Categoria> categorias) {
-        this.categorias = categorias;
+    public void setProdutos(Collection<Produto> produtos) {
+        this.produtos = produtos;
     }
+
     
 }

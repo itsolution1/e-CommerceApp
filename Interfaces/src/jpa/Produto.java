@@ -30,8 +30,7 @@ public class Produto implements Serializable, Cloneable {
     private String preco;
     private int quantidade;
     
-    @OneToMany(fetch=FetchType.EAGER)  
-    private Collection<Filial> filiais;
+    
 
     public Produto() {
     }
@@ -40,14 +39,13 @@ public class Produto implements Serializable, Cloneable {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        this.filiais = null;
+        
     }
     
     public Produto(String nome, String descricao, String preco, int quantidade) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        this.filiais = null;
         this.quantidade = quantidade;
     }
 
@@ -123,34 +121,6 @@ public class Produto implements Serializable, Cloneable {
      */
     public void setPreco(String preco) {
         this.preco = preco;
-    }
-
-    /**
-     * @return the filial
-     */
-    public Collection<Filial> getFilial() {
-        return getFiliais();
-    }
-
-    /**
-     * @param filial the filial to set
-     */
-    public void setFilial(Collection<Filial> filial) {
-        this.setFiliais(filial);
-    }
-
-    /**
-     * @return the filiais
-     */
-    public Collection<Filial> getFiliais() {
-        return filiais;
-    }
-
-    /**
-     * @param filiais the filiais to set
-     */
-    public void setFiliais(Collection<Filial> filiais) {
-        this.filiais = filiais;
     }
 
     /**

@@ -136,6 +136,11 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
                 comboProdutoItemStateChanged(evt);
             }
         });
+        comboProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboProdutoActionPerformed(evt);
+            }
+        });
 
         botaoVoltar.setText("Voltar");
         botaoVoltar.setToolTipText("");
@@ -309,6 +314,10 @@ public class AlterarProdutoGUI extends javax.swing.JFrame {
             txtPreco.setText(produto.getPreco());
         }
     }//GEN-LAST:event_comboProdutoItemStateChanged
+
+    private void comboProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboProdutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAlterar;

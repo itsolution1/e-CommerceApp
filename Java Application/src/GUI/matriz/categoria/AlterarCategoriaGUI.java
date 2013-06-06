@@ -256,9 +256,5 @@ public class AlterarCategoriaGUI extends javax.swing.JFrame {
             itens[i] = categorias[i].getNome();
             comboCategoria.addItem(itens[i]);
         }
-        //comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(categorias));
     }
-    /**
-     * @param comboCategoria comboCategoria to set
-     */
 }

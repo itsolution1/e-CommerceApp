@@ -55,7 +55,6 @@ public class MatrizInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ITSolution - Matriz");
-        setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(100, 100, 720, 480));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximizedBounds(new java.awt.Rectangle(100, 100, 720, 480));
@@ -336,7 +335,6 @@ public class MatrizInicial extends javax.swing.JFrame {
         );
 
         jPanel4.getAccessibleContext().setAccessibleName("Controles");
-        jPanel6.getAccessibleContext().setAccessibleName("Filial");
         jPanel6.getAccessibleContext().setAccessibleDescription("");
 
         getAccessibleContext().setAccessibleDescription("");
@@ -444,11 +442,8 @@ public class MatrizInicial extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCategoriaAlterar;
-    private javax.swing.JButton botaoCategoriaAlterar1;
     private javax.swing.JButton botaoCategoriaExcluir;
-    private javax.swing.JButton botaoCategoriaExcluir1;
     private javax.swing.JButton botaoCategoriaIncluir;
-    private javax.swing.JButton botaoCategoriaIncluir1;
     private javax.swing.JButton botaoFilialAlterar;
     private javax.swing.JButton botaoFilialExcluir;
     private javax.swing.JButton botaoFilialIncluir;
@@ -464,7 +459,6 @@ public class MatrizInicial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 }

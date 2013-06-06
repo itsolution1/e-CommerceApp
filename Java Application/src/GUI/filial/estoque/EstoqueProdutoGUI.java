@@ -5,6 +5,7 @@
 package GUI.filial.estoque;
 
 import controller.CategoriaController;
+import controller.FilialController;
 import controller.ProdutoController;
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +23,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
+    private FilialController filialController = null;
     private Collection<Produto> produtos;
     private Collection<Categoria> categorias;
     private Categoria categoria;
