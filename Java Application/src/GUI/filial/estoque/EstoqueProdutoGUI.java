@@ -287,7 +287,8 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
             produto.setDescricao(txtDescricao.getText());
             produto.setNome(txtNome.getText());
             produto.setPreco(txtPreco.getText());
-            produto.setQuantidade(Integer.parseInt(numeroQuantidade.getValue().toString()));
+            int quantidade = Integer.parseInt(numeroQuantidade.getValue().toString() );
+            produto.setQuantidade( quantidade );
             
             produtoController.edit(produto);
             JOptionPane.showMessageDialog(null, "Estoque do produto " + produto.getNome() + " alterado com sucesso.");
