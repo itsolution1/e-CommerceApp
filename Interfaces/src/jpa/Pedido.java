@@ -27,6 +27,8 @@ public class Pedido implements Serializable, Cloneable {
     private double valorTotal = 0;
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<ItemPedido> itensPedido;
+    private boolean pedidoEncaminhado;
+    private boolean pedidoEnviadoCliente;
     
     //private Cliente cliente;
     public Pedido() {
@@ -37,7 +39,8 @@ public class Pedido implements Serializable, Cloneable {
         for(ItemPedido ip: itensPedido){
             this.valorTotal += Double.parseDouble(ip.getProduto().getPreco()) * ip.getQuantidade();
         }
-        
+        this.pedidoEncaminhado = false;
+        this.pedidoEnviadoCliente = false;
     }
 
     @Override
@@ -100,6 +103,34 @@ public class Pedido implements Serializable, Cloneable {
      */
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    /**
+     * @return the pedidoEncaminhado
+     */
+    public boolean isPedidoEncaminhado() {
+        return pedidoEncaminhado;
+    }
+
+    /**
+     * @param pedidoEncaminhado the pedidoEncaminhado to set
+     */
+    public void setPedidoEncaminhado(boolean pedidoEncaminhado) {
+        this.pedidoEncaminhado = pedidoEncaminhado;
+    }
+
+    /**
+     * @return the pedidoEnviadoCliente
+     */
+    public boolean isPedidoEnviadoCliente() {
+        return pedidoEnviadoCliente;
+    }
+
+    /**
+     * @param pedidoEnviadoCliente the pedidoEnviadoCliente to set
+     */
+    public void setPedidoEnviadoCliente(boolean pedidoEnviadoCliente) {
+        this.pedidoEnviadoCliente = pedidoEnviadoCliente;
     }
 
 }

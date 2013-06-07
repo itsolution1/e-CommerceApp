@@ -6,79 +6,57 @@
 package GUI.filial.vendas;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import jpa.Produto;
 
 /**
  *
- * @author juliano
+ * @author GPinzegher
  */
 public class Carrinho {
 
-    List<ItemCarrinho> itensCarrinho;
-    ItemCarrinho filial;
+    private List<ItemCarrinho> itensCarrinho;
     int numeroDeItens;
     double precoTotal;
 
-    public Carrinho(ItemCarrinho filial) {
+    public Carrinho() {
         this.itensCarrinho = new ArrayList<>();
-        this.filial = filial;
         numeroDeItens = 0;
         precoTotal = 0;
     }
-
-
+    
     public synchronized void adicionarItem(ItemCarrinho itemCarrinho) {
 
         boolean newItem = true;
+        if ( itensCarrinho != null ) {
+            for (ItemCarrinho novoItem : itensCarrinho) {
+                if (novoItem.getProduto().getId() == itemCarrinho.getProduto().getId()) {
+                    newItem = false;
+                    return;
+                }
+            }
 
-        for (ItemCarrinho novoItem : itensCarrinho) {
-            if (novoItem.produto.getId() == itemCarrinho.produto.getId()) {
-                newItem = false;
-                return;
+            if (newItem) {
+                getItensCarrinho().add(itemCarrinho);
+                numeroDeItens += itemCarrinho.getQuantidade();
             }
         }
-
-        if (newItem) {
-            itensCarrinho.add(itemCarrinho);
-            numeroDeItens += itemCarrinho.getQuantidade();
-        }
-    }
-
-
-    public synchronized void atualizarQuantidade(ItemCarrinho itemCarrinho, short novaQuantidade) {
-        int i = 0;
-        for (ItemCarrinho item : itensCarrinho) {
-            if (item.getProduto().getId() == itemCarrinho.produto.getId()) {
-                numeroDeItens -= itemCarrinho.getQuantidade();
-                
-               item.setQuantidade(novaQuantidade);
-               itensCarrinho.set(i, item);
-            }
-            i++;
-        }
-
+        
     }
     
     public synchronized void deletarItem(ItemCarrinho itemCarrinho){
-        for (ItemCarrinho item : itensCarrinho) {
+        for (ItemCarrinho item : getItensCarrinho()) {
             if (item.getProduto().getId() == itemCarrinho.produto.getId()) {
-                itensCarrinho.remove(item);
+                getItensCarrinho().remove(item);
             }
         }
-    }
-
-
-    public synchronized List<ItemCarrinho> getItems() {
-        return itensCarrinho;
     }
 
     public synchronized int getNumeroDeItens() {
 
         numeroDeItens = 0;
 
-        for (ItemCarrinho scItem : itensCarrinho) {
+        for (ItemCarrinho scItem : getItensCarrinho()) {
 
             numeroDeItens += scItem.getQuantidade();
         }
@@ -87,11 +65,11 @@ public class Carrinho {
     }
 
 
-    public synchronized double getSubtotal() {
+    public synchronized double getPrecoTotal() {
 
         double quantia = 0;
 
-        for (ItemCarrinho scItem : itensCarrinho) {
+        for (ItemCarrinho scItem : getItensCarrinho()) {
 
             Produto produto = (Produto) scItem.getProduto();
             quantia += (scItem.getQuantidade() * Double.parseDouble(produto.getPreco()));
@@ -99,31 +77,29 @@ public class Carrinho {
 
         return quantia;
     }
-
-
-    public synchronized void calculaTotal(String taxa) {
-
-        double quantia = 0;
-
-        // cast surcharge as double
-        double s = Double.parseDouble(taxa);
-
-        quantia = this.getSubtotal();
-        quantia += s;
-
-        precoTotal = quantia;
-    }
-
-
-    public synchronized double getTotal() {
-
-        return precoTotal;
+    
+    public synchronized void setPrecoTotal(){
+        this.precoTotal = getPrecoTotal();
     }
 
     public synchronized void clear() {
-        itensCarrinho.clear();
+        getItensCarrinho().clear();
         numeroDeItens = 0;
         precoTotal = 0;
+    }
+
+    /**
+     * @return the itensCarrinho
+     */
+    public List<ItemCarrinho> getItensCarrinho() {
+        return itensCarrinho;
+    }
+
+    /**
+     * @param itensCarrinho the itensCarrinho to set
+     */
+    public void setItensCarrinho(List<ItemCarrinho> itensCarrinho) {
+        this.itensCarrinho = itensCarrinho;
     }
 
 }
