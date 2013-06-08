@@ -21,26 +21,23 @@ import jpa.Produto;
  */
 public class EstoqueProdutoGUI extends javax.swing.JFrame {
     
-    private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
     private FilialController filialController = null;
     private Collection<Produto> produtos;
-    private Collection<Categoria> categorias;
-    private Categoria categoria;
     private Produto produto;
     private Filial filial;
     
     /**
-     * Creates new form ContatoGUI
+     * @author GPinzegher
      */
     
     public EstoqueProdutoGUI(Filial filial) {
         this.filial = filial;
         initComponents();
-        setComboCategoria(comboCategoria);
         setComboProduto(comboProduto);
     }
 
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,8 +64,6 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         comboProduto = new javax.swing.JComboBox();
         botaoVoltar = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
-        nomeCategoriaText3 = new javax.swing.JLabel();
-        comboCategoria = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Contatos");
@@ -80,7 +75,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title.setText("Alterar Produto");
+        title.setText("Alterar Estoque x Produto");
         title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         itsolution_logo.setText("ITSolution");
@@ -183,15 +178,6 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
             }
         });
 
-        nomeCategoriaText3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText3.setText("Categoria:");
-
-        comboCategoria.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboCategoriaItemStateChanged(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -205,21 +191,17 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addComponent(itsolution_logo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nomeCategoriaText3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nomeCategoriaText4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)))))
+                        .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nomeCategoriaText4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -229,16 +211,12 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                     .addComponent(itsolution_logo)
                     .addComponent(title))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(nomeCategoriaText3)
-                        .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(nomeCategoriaText4)
-                        .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomeCategoriaText4)
+                    .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAlterar)
                     .addComponent(botaoVoltar))
@@ -265,32 +243,43 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         setBounds((screenSize.width-650)/2, (screenSize.height-423)/2, 650, 423);
     }// </editor-fold>//GEN-END:initComponents
     
-        
-    private void botaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarActionPerformed
-
-        //Categoria categoria = (Categoria)comboCategoria.getSelectedItem();
-        //Produto produto = (Produto)comboProduto.getSelectedItem();
+    private void setControllers(){
         try {
             if (produtoController == null) {
                 produtoController = new ProdutoController();
             }
-            if (categoriaController == null) {
-                produtoController = new ProdutoController();
+            if (filialController == null) {
+                filialController = new FilialController();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        
+    }
+    private void botaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarActionPerformed
+
+        //Categoria categoria = (Categoria)comboCategoria.getSelectedItem();
+        //Produto produto = (Produto)comboProduto.getSelectedItem();
+        setControllers();
         
         try {
+            
             produto.setDescricao(txtDescricao.getText());
             produto.setNome(txtNome.getText());
             produto.setPreco(txtPreco.getText());
             int quantidade = Integer.parseInt(numeroQuantidade.getValue().toString() );
             produto.setQuantidade( quantidade );
+            Collection<Produto> produtosAtualizado = produtos;
+            produtosAtualizado.removeAll(produtos);
+            for(Produto p: produtos) {
+                if ( p.getNome().equals(produto.getNome()) ) {
+                    p.setQuantidade( quantidade );
+                    
+                }
+                produtosAtualizado.add(p);
+            }
+            filial.setProdutos(produtosAtualizado);
             
-            produtoController.edit(produto);
             JOptionPane.showMessageDialog(null, "Estoque do produto " + produto.getNome() + " alterado com sucesso.");
             new GUI.filial.InicioGUI(filial).setVisible(true);
             dispose();
@@ -305,49 +294,30 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         new GUI.filial.InicioGUI(filial).setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
-    private void comboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaItemStateChanged
-        for(Categoria categ: categorias){
-            if(categ.getNome().equals(comboCategoria.getSelectedItem())) {
-                categoria = categ;
-                setComboProduto(comboProduto);
-            }
-        }
-    }//GEN-LAST:event_comboCategoriaItemStateChanged
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            if (categoriaController == null) {
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        categorias = categoriaController.findAll();
-        comboCategoria.removeAllItems();
-
-        for(Categoria categ: categorias){
-            comboCategoria.addItem(categ.getNome());
-        }
+        
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void comboProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoItemStateChanged
-        if ( produto == null || produto != comboProduto.getSelectedItem()) {
-            produtos = (List)categoria.getProdutos();
-            produto = (Produto)comboProduto.getSelectedItem();
-        }
-        if(produto != null ){
-            txtNome.setText(produto.getNome());
-            txtDescricao.setText(produto.getDescricao());
-            txtPreco.setText(produto.getPreco());
-            numeroQuantidade.setValue(produto.getQuantidade());
+        if ( filial != null ) {
+            produtos = filial.getProdutos();
+            if ( produtos != null  ) {
+                for ( Produto p: produtos ) {
+                    if ( comboProduto.getSelectedItem().equals(p.getNome()) ) {
+                        produto = p;
+                        txtNome.setText(produto.getNome());
+                        txtDescricao.setText(produto.getDescricao());
+                        txtPreco.setText(produto.getPreco());
+                    }
+                }
+            }
         }
     }//GEN-LAST:event_comboProdutoItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAlterar;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JComboBox comboCategoria;
     private javax.swing.JComboBox comboProduto;
     private javax.swing.JLabel itsolution_logo;
     private javax.swing.JPanel jPanel1;
@@ -355,7 +325,6 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel nomeCategoriaText;
     private javax.swing.JLabel nomeCategoriaText1;
     private javax.swing.JLabel nomeCategoriaText2;
-    private javax.swing.JLabel nomeCategoriaText3;
     private javax.swing.JLabel nomeCategoriaText4;
     private javax.swing.JSpinner numeroQuantidade;
     private javax.swing.JPanel panelIncluirCategoria;
@@ -365,41 +334,6 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the comboCategoria
-     */
-    public javax.swing.JComboBox getComboCategoria() {
-        return comboCategoria;
-    }
-    /**
-     * @param comboCategoria the comboCategoria to set
-     */
-    public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
-        
-        this.comboCategoria = comboCategoria;
-        try {
-            if (categoriaController == null) {
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        categorias = categoriaController.findAll();
-        comboCategoria.removeAllItems();
-
-        for(Categoria categ: categorias){
-            comboCategoria.addItem(categ.getNome());
-        }
-        for(Categoria categ: categorias){
-            if(categoria.getNome().equals(comboCategoria.getSelectedItem())) {
-                categoria = categ;
-            }
-        }
-    }
-    /**
-     * @return the comboProduto
-     */
     public javax.swing.JComboBox getComboProduto() {
         return comboProduto;
     }
@@ -408,30 +342,42 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
      * @param comboProduto the comboProduto to set
      */
     public void setComboProduto(javax.swing.JComboBox comboProduto) {
+        setControllers();
+        if ( filial != null ) {
+            produtos = filial.getProdutos();
+            if (produtos != null) {
+                this.comboProduto.removeAllItems();
+
+                for (Produto p : produtos) {
+                    comboProduto.addItem(p.getNome());
+                }
+                
+                for (Produto p: produtos) {
+                    if ( comboProduto.getSelectedItem().equals(p.getNome()) ){
+                        produto = p;
+                    }
+                }
+            }
+        }
+        
+        
         this.comboProduto = comboProduto;
-        try {
-            if (produtoController == null) {
-                produtoController = new ProdutoController();
-            }
-            if (categoriaController == null){
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        for(Categoria categ: categorias){
-            if(categ.getNome().equals(comboCategoria.getSelectedItem())){
-                categoria = categ;
-            }
-        }
-        produtos = (List)categoria.getProdutos();
-        comboProduto.removeAllItems();
-        for(Produto prod: produtos){
-            comboProduto.addItem(prod);
-        }
     }
-    
+
+    /**
+     * @return the produtos
+     */
+    public Collection<Produto> getProdutos() {
+        return produtos;
+    }
+
+    /**
+     * @param produtos the produtos to set
+     */
+    public void setProdutos(Collection<Produto> produtos) {
+        
+        this.produtos = produtos;
+    }
     
 
     /**

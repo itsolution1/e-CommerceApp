@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -96,6 +97,10 @@ public class Filial  implements Serializable, Cloneable {
     public void setProdutos(Collection<Produto> produtos) {
         this.produtos = produtos;
     }
+
+    /**
+     * @param produtos the produtos to set
+     */
 
     
 }

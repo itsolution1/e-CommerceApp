@@ -226,7 +226,9 @@ public class FilialGUI extends javax.swing.JFrame {
         }
         
         for ( Filial f: filiais ) {
-            comboFiliais.addItem(f.getNome());
+            if ( comboFiliais.getSelectedItem().equals(f.getNome()) ) {
+                filial = f;
+            }
         }
         
         //comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(categorias));

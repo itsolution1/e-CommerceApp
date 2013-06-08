@@ -333,10 +333,11 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
             for (Filial f : this.filiais) {
                 if (f.getNome().equals(this.comboFiliais.getSelectedItem().toString())) {
                     this.filial = f;
-                    setComboProdutoFilial(this.comboProdutoFilial);
                 }
             }
         }
+        setComboProdutoFilial(this.comboProdutoFilial);
+        updateTable();
     }//GEN-LAST:event_comboFiliaisItemStateChanged
 
     private void comboProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoItemStateChanged
@@ -380,12 +381,29 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
             if ( categoria != null ) {
                 if ( produtoIncluir != null ) {
                     if ( produtosFilial != null ) {
+                        produtoIncluir.setFilial(filial);
                         produtosFilial.add(produtoIncluir);
-                        filial.setProdutos(produtosFilial);
+                        
+                        try{
+                            filial.setProdutos(produtosFilial);
+                        } catch(Exception e) {
+                            System.err.println(e.getMessage());
+                        }
+
                         filialController.edit(filial);
+                        Produto novoProdutoFilial = new Produto();
+                        novoProdutoFilial.setNome(produtoIncluir.getNome());
+                        novoProdutoFilial.setPreco(produtoIncluir.getPreco());
+                        novoProdutoFilial.setDescricao(produtoIncluir.getDescricao());
+                        novoProdutoFilial.setQuantidade(produtoIncluir.getQuantidade());
+                        novoProdutoFilial.setFilial(produtoIncluir.getFilial());
+                        produtoController.create(novoProdutoFilial);
+                        
                         setComboProdutoFilial(comboProdutoFilial);
                         setComboProduto(comboProduto);
-                        JOptionPane.showMessageDialog(null, "Produto " + produtoIncluir.getNome() + " foi relacionado a filial " + filial.getNome() + " com sucesso!" );
+                        updateTable();
+                        //JOptionPane.showMessageDialog(null, "Produto " + produtoIncluir.getNome() + " foi relacionado a filial " + filial.getNome() + " com sucesso!" );
+                       
                     } else { JOptionPane.showMessageDialog(null, "ERRO 001." ); } //produtosFilial == null
                 } else { JOptionPane.showMessageDialog(null, "Erro 002. Não há produto selecionado para relacionar."); }
             } else { JOptionPane.showMessageDialog(null, "Erro 003. Não há uma categoria selecionada."); }
@@ -532,7 +550,6 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
                 }
                 updateTable();
             } else {
-                JOptionPane.showMessageDialog(null, "Não há produtos na filial " + this.filial.getNome());
             }
             
         } else {

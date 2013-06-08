@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -30,6 +31,8 @@ public class Produto implements Serializable, Cloneable {
     private String preco;
     private int quantidade;
     
+    @OneToOne(fetch = FetchType.EAGER)
+    private Filial filial;
     
 
     public Produto() {
@@ -39,6 +42,7 @@ public class Produto implements Serializable, Cloneable {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.filial = null;
         
     }
     
@@ -47,6 +51,7 @@ public class Produto implements Serializable, Cloneable {
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
+        this.filial = null;
     }
 
     public Long getId() {
@@ -135,5 +140,19 @@ public class Produto implements Serializable, Cloneable {
      */
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    /**
+     * @return the filial
+     */
+    public Filial getFilial() {
+        return filial;
+    }
+
+    /**
+     * @param filial the filial to set
+     */
+    public void setFilial(Filial filial) {
+        this.filial = filial;
     }
 }
