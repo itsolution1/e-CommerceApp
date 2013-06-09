@@ -6,10 +6,13 @@ package GUI.matriz.produto;
 
 import GUI.matriz.MatrizInicial;
 import controller.CategoriaController;
+import controller.FilialController;
 import controller.ProdutoController;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jpa.Categoria;
+import jpa.Filial;
 import jpa.Produto;
 
 
@@ -21,6 +24,7 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
     
     private CategoriaController categoriaController = null;
     private ProdutoController produtoController = null;
+    private FilialController filialController = null;
     private List<Produto> produtos;
     private List<Categoria> categorias;
     private Categoria categoria;
@@ -243,23 +247,36 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
       
     private void botaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarActionPerformed
 
+        setControllers();
+        boolean podeExcluir = false;
         try {
-            if (produtoController == null) {
-                produtoController = new ProdutoController();
-            }
-            if (categoriaController == null) {
-                produtoController = new ProdutoController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-
-        try {
+            Collection<Filial> filiais = filialController.findAll();
             
-            categoria.getProdutos().remove(produto);
-            categoriaController.edit(categoria);
-            JOptionPane.showMessageDialog(null, "Produto " + produto.getNome() + " excluido com sucesso.");
+            if (filiais == null && filiais.isEmpty()) {
+                podeExcluir = true;
+            } else {
+                for ( Filial f: filiais ) {
+                    Collection<Produto> produtosFilial = f.getProdutos();
+                    if ( produtosFilial == null && produtosFilial.isEmpty() ) {
+                        podeExcluir = true;
+                    } else {
+                        for (Produto p : produtosFilial) {
+                            if (this.produto.getNome().equals(p.getNome()) && p.getQuantidade() > 0 ) {
+                                podeExcluir = false;
+                                JOptionPane.showMessageDialog(null, "Produto não pode ser excluido, pois há estoque em uma filial.");
+                            } else {
+                                podeExcluir = true;
+                            }
+                        }
+                    }   
+                }
+            }
+            if (podeExcluir) {
+                categoria.getProdutos().remove(produto);
+                categoriaController.edit(categoria);
+                JOptionPane.showMessageDialog(null, "Produto " + produto.getNome() + " excluido com sucesso.");
+            }
+
             new MatrizInicial().setVisible(true);
             dispose();
             
@@ -274,21 +291,7 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-     
-        try {
-            if (categoriaController == null) {
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
-        categorias = categoriaController.findAll();
-        comboCategoria.removeAllItems();
-
-        for(Categoria categ: categorias){
-            comboCategoria.addItem(categ.getNome());
-        }
+ 
     }//GEN-LAST:event_formWindowOpened
 
     private void comboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCategoriaItemStateChanged
@@ -342,14 +345,9 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
      */
     public void setComboCategoria(javax.swing.JComboBox comboCategoria) {
         this.comboCategoria = comboCategoria;
-        try {
-            if (categoriaController == null) {
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
+        
+        setControllers();
+        
         categorias = categoriaController.findAll();
         comboCategoria.removeAllItems();
 
@@ -371,17 +369,7 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
 
     public void setComboProduto(javax.swing.JComboBox comboProduto) {
         this.comboProduto = comboProduto;
-        try {
-            if (produtoController == null) {
-                produtoController = new ProdutoController();
-            }
-            if (categoriaController == null){
-                categoriaController = new CategoriaController();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
-            return;
-        }
+        setControllers();
         for(Categoria categ: categorias){
             if(categ.getNome().equals(comboCategoria.getSelectedItem())){
                 categoria = categ;
@@ -394,5 +382,23 @@ public class ExcluirProdutoGUI extends javax.swing.JFrame {
         }
 
     }
+    
+    private void setControllers(){
+        try {
+            if (produtoController == null) {
+                produtoController = new ProdutoController();
+            }
+            if (categoriaController == null){
+                categoriaController = new CategoriaController();
+            }
+            if (filialController == null){
+                filialController = new FilialController();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
+            return;
+        }
+    }
+    
 
 }
