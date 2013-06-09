@@ -28,7 +28,7 @@ public class Filial  implements Serializable, Cloneable {
     private Long id;
     private String nome;
    
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany( fetch = FetchType.EAGER )
     private Collection<Produto> produtos;
     
     public Filial() {

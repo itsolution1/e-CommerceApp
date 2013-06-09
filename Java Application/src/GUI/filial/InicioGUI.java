@@ -166,8 +166,8 @@ public class InicioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoGerenciarEstoqueActionPerformed
 
     private void botaoVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVenderActionPerformed
-        dispose();
         new GUI.filial.vendas.VendasInicialGUI(filial).setVisible(true);
+        dispose();
     }//GEN-LAST:event_botaoVenderActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

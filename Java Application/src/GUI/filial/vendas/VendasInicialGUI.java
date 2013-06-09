@@ -462,7 +462,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             SpinnerModel sm = new SpinnerNumberModel(0, 0, quantidade, 2);
             contadorIncluir = new JSpinner(sm);
         } else {
-            SpinnerModel sm = new SpinnerNumberModel(0, 0, 0, 2);
+            SpinnerModel sm = new SpinnerNumberModel(0, -1, -1, 2);
             contadorIncluir = new JSpinner(sm);
         }
         

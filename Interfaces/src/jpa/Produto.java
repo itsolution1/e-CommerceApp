@@ -31,7 +31,7 @@ public class Produto implements Serializable, Cloneable {
     private String preco;
     private int quantidade;
     
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne ( fetch = FetchType.EAGER )
     private Filial filial;
     
 
