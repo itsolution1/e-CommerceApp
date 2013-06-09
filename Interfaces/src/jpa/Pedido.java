@@ -5,13 +5,17 @@
 package jpa;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -30,17 +34,21 @@ public class Pedido implements Serializable, Cloneable {
     private boolean pedidoEncaminhado;
     private boolean pedidoEnviadoCliente;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataDoPedido;
+    
     //private Cliente cliente;
     public Pedido() {
     }
     
     public Pedido(Collection<ItemPedido> itensPedido){
         this.itensPedido = itensPedido;
-        for(ItemPedido ip: itensPedido){
+        for(ItemPedido ip: itensPedido) {
             this.valorTotal += Double.parseDouble(ip.getProduto().getPreco()) * ip.getQuantidade();
         }
         this.pedidoEncaminhado = false;
         this.pedidoEnviadoCliente = false;
+        setDataDoPedido();
     }
 
     @Override
@@ -131,6 +139,22 @@ public class Pedido implements Serializable, Cloneable {
      */
     public void setPedidoEnviadoCliente(boolean pedidoEnviadoCliente) {
         this.pedidoEnviadoCliente = pedidoEnviadoCliente;
+    }
+
+    /**
+     * @return the dataDoPedido
+     */
+    public Date getDataDoPedido() {
+        return dataDoPedido;
+    }
+
+    /**
+     * @param dataDoPedido the dataDoPedido to set
+     */
+    private void setDataDoPedido() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        this.dataDoPedido = date;
     }
 
 }
