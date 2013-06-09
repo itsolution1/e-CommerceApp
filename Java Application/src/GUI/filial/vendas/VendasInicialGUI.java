@@ -11,7 +11,11 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import jpa.Filial;
+import jpa.ItemPedido;
 import jpa.Produto;
 
 /**
@@ -20,17 +24,14 @@ import jpa.Produto;
  */
 public class VendasInicialGUI extends javax.swing.JFrame {
     
-    private FilialController    filialController    = null;
-    private ProdutoController   produtoController   = null;
-    private Collection<Produto> produtosCarrinho;
-    private Filial filial;
-    private Collection<Produto>        produtosFilial;
-    private Produto                    produtoFilialEscolhido;
-    private ItemCarrinho                     filialIncluir;
-    
     private Carrinho            carrinho;
-
+    private Collection<ItemCarrinho> itensCarrinho;
+    private Filial filial;
+    private Produto produtoFilialEscolhido;
+    private ItemCarrinho itemCarrinhoExcluir;
+    private Collection<Produto> produtosFilial;
     
+
     /**
      * Creates new form ContatoGUI
      */
@@ -41,6 +42,9 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         title.setText("Filial " + this.filial.getNome());
         setComboProdutoFilial(comboProdutoFilial);
         updateTable();
+        botaoIncluirProduto.setEnabled(false);
+        botaoRetirarItemCarrinho.setEnabled(false);
+        
         
     }
     
@@ -49,17 +53,17 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     private void updateTable() {
         setControllers();
         
-        produtosCarrinho = (Collection)carrinho.getItensCarrinho();
-        if ( produtosCarrinho !=null ) {
+        this.itensCarrinho = (Collection)this.carrinho.getItensCarrinho();
+        if ( this.itensCarrinho !=null ) {
             
-            ItemCarrinho[] vetorItemCarinho = produtosCarrinho.toArray(new ItemCarrinho[0]);
+            ItemCarrinho[] vetorItemCarinho = this.itensCarrinho.toArray(new ItemCarrinho[0]);
             Object[][] objects = new Object[vetorItemCarinho.length][2];
             
             for (int i = 0; i < vetorItemCarinho.length; i++) {
                 objects[i][0] = vetorItemCarinho[i].getProduto().getNome();
                 objects[i][1] = vetorItemCarinho[i].getQuantidade();
         }
-        tblFiliais.setModel(new javax.swing.table.DefaultTableModel(
+        this.tblFiliais.setModel(new javax.swing.table.DefaultTableModel(
                 objects,
                 new String[]{ "Produto", "Quantidade" }));
         } else return;
@@ -90,7 +94,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         panelIncluirCategoria2 = new javax.swing.JPanel();
         comboProdutoRetirar = new javax.swing.JComboBox();
         nomeCategoriaText6 = new javax.swing.JLabel();
-        botaoRetirarProduto = new javax.swing.JButton();
+        botaoRetirarItemCarrinho = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
         botaoFinalizar = new javax.swing.JButton();
 
@@ -183,10 +187,10 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         nomeCategoriaText6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nomeCategoriaText6.setText("Produto:");
 
-        botaoRetirarProduto.setText("Atualizar");
-        botaoRetirarProduto.addActionListener(new java.awt.event.ActionListener() {
+        botaoRetirarItemCarrinho.setText("Atualizar");
+        botaoRetirarItemCarrinho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRetirarProdutoActionPerformed(evt);
+                botaoRetirarItemCarrinhoActionPerformed(evt);
             }
         });
 
@@ -200,7 +204,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboProdutoRetirar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoRetirarProduto)
+                .addComponent(botaoRetirarItemCarrinho)
                 .addContainerGap())
         );
         panelIncluirCategoria2Layout.setVerticalGroup(
@@ -211,7 +215,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                     .addGroup(panelIncluirCategoria2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(nomeCategoriaText6)
                         .addComponent(comboProdutoRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botaoRetirarProduto))
+                    .addComponent(botaoRetirarItemCarrinho))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -302,19 +306,19 @@ public class VendasInicialGUI extends javax.swing.JFrame {
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         dispose();
-        new GUI.filial.InicioGUI(filial).setVisible(true);
+        new GUI.filial.InicioGUI(this.filial).setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void comboProdutoFilialItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoFilialItemStateChanged
-        if ( filial != null ) {
+        if ( this.filial != null ) {
             
             produtosFilial = filial.getProdutos();
             
-            if ( produtosFilial != null && !produtosFilial.isEmpty() ) {
+            if ( this.produtosFilial != null && !this.produtosFilial.isEmpty() ) {
                 for (Produto p : produtosFilial) {
-                    if ( comboProdutoFilial.getSelectedItem() != null && comboProdutoFilial.getSelectedItem().equals(p.getNome()) ) {
-                        produtoFilialEscolhido = p;
-                        //contadorIncluir.set
+                    if ( getComboProdutoFilial().getSelectedItem() != null && getComboProdutoFilial().getSelectedItem().equals(p.getNome()) ) {
+                        this.produtoFilialEscolhido = p;
+                        setContadorIncluir(this.contadorIncluir);
                     }
                 }
             }
@@ -322,14 +326,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoFilialItemStateChanged
 
     private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
-        if ( produtoFilialEscolhido != null ) {
-            System.out.println(Short.parseShort(contadorIncluir.getValue().toString()));
-            ItemCarrinho itemCarrinho = new ItemCarrinho( produtoFilialEscolhido, Short.parseShort(contadorIncluir.getValue().toString())) ;
-            if ( carrinho != null && !carrinho.getItensCarrinho().isEmpty()) {
-                carrinho.getItensCarrinho().add(itemCarrinho);
-            }
-            updateTable();
-        }
+        //persistir na base o pedido
 
     }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
 
@@ -338,12 +335,25 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoRetirarActionPerformed
 
     private void comboProdutoRetirarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoRetirarItemStateChanged
-
+        if ( this.itemCarrinhoExcluir != null ) {
+            if ( carrinho.getNumeroDeItens() > 0 ) {
+                itensCarrinho = carrinho.getItensCarrinho();
+                for ( ItemCarrinho ic: itensCarrinho ) {
+                    if ( comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome()) ) {
+                        itemCarrinhoExcluir = ic;
+                    }
+                }
+            }
+            
+        }
     }//GEN-LAST:event_comboProdutoRetirarItemStateChanged
 
-    private void botaoRetirarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetirarProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoRetirarProdutoActionPerformed
+    private void botaoRetirarItemCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetirarItemCarrinhoActionPerformed
+        if ( itemCarrinhoExcluir != null ) {
+            carrinho.deletarItem(itemCarrinhoExcluir);
+            updateTable();
+        }
+    }//GEN-LAST:event_botaoRetirarItemCarrinhoActionPerformed
 
     private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
         //Pedido ped = new Pedido();
@@ -357,7 +367,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFinalizar;
     private javax.swing.JButton botaoIncluirProduto;
-    private javax.swing.JButton botaoRetirarProduto;
+    private javax.swing.JButton botaoRetirarItemCarrinho;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JComboBox comboProdutoFilial;
     private javax.swing.JComboBox comboProdutoRetirar;
@@ -389,9 +399,6 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         this.carrinho = carrinho;
     }
 
-    /**
-     * @return the comboProdutoFilial
-     */
     public javax.swing.JComboBox getComboProdutoFilial() {
         return comboProdutoFilial;
     }
@@ -399,39 +406,98 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     /**
      * @param comboProdutoFilial the comboProdutoFilial to set
      */
-    public void setComboProdutoFilial(javax.swing.JComboBox comboProdutoFilial) {
-        if ( filial != null ) {
-            produtosFilial = filial.getProdutos();
-            
-            if ( produtosFilial != null && !produtosFilial.isEmpty() ) {
-                comboProdutoFilial.removeAllItems();
-                for (Produto p : produtosFilial) {
-                    comboProdutoFilial.addItem(p.getNome());
-                }
-                for (Produto p : produtosFilial) {
-                    if ( comboProdutoFilial.getSelectedItem() != null && comboProdutoFilial.getSelectedItem().equals(p.getNome()) ) {
-                        produtoFilialEscolhido = p;
-                    }
-                }
-            }
-            
-            
-        }
-        this.comboProdutoFilial = comboProdutoFilial;
-    }
-    
+   
     public void setControllers() {
         
         try {
-            filialController = new FilialController();
-            produtoController = new ProdutoController();
+            //filialController = new FilialController();
+            //produtoController = new ProdutoController();
         } catch (Exception ex) {
             botaoIncluirProduto.setEnabled(false);
-            botaoRetirarProduto.setEnabled(false);
+            getBotaoRetirarProduto().setEnabled(false);
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o servidor...");
             Logger.getLogger(RelacionarFilialGUI.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
+    }
+
+    /**
+     * @param comboProdutoFilial the comboProdutoFilial to set
+     */
+    public void setComboProdutoFilial(javax.swing.JComboBox comboProdutoFilial) {
+        if ( filial != null ) {
+            comboProdutoFilial.removeAllItems();
+            produtosFilial = this.filial.getProdutos();
+            if ( produtosFilial != null && !produtosFilial.isEmpty() ) {
+                botaoIncluirProduto.setEnabled(false);
+                for ( Produto p: produtosFilial ) {
+                    comboProdutoFilial.addItem(p.getNome());
+                }
+            }
+        }
+        this.comboProdutoFilial = comboProdutoFilial;
+    }
+
+    /**
+     * @return the contadorIncluir
+     */
+    public javax.swing.JSpinner getContadorIncluir() {
+        return contadorIncluir;
+    }
+
+    /**
+     * @param contadorIncluir the contadorIncluir to set
+     */
+    public void setContadorIncluir(javax.swing.JSpinner contadorIncluir) {
+        int quantidade = produtoFilialEscolhido.getQuantidade();
+        if ( quantidade > 0 ) {
+            SpinnerModel sm = new SpinnerNumberModel(0, 0, quantidade, 2);
+            contadorIncluir = new JSpinner(sm);
+        } else {
+            SpinnerModel sm = new SpinnerNumberModel(0, 0, 0, 2);
+            contadorIncluir = new JSpinner(sm);
+        }
+        
+        this.contadorIncluir = contadorIncluir;
+    }
+
+    /**
+     * @return the botaoRetirarProduto
+     */
+    public javax.swing.JButton getBotaoRetirarProduto() {
+        return botaoRetirarItemCarrinho;
+    }
+
+    /**
+     * @param botaoRetirarProduto the botaoRetirarProduto to set
+     */
+    public void setBotaoRetirarProduto(javax.swing.JButton botaoRetirarProduto) {
+        
+        this.botaoRetirarItemCarrinho = botaoRetirarProduto;
+    }
+
+    /**
+     * @return the comboProdutoRetirar
+     */
+    public javax.swing.JComboBox getComboProdutoRetirar() {
+        return comboProdutoRetirar;
+    }
+
+    /**
+     * @param comboProdutoRetirar the comboProdutoRetirar to set
+     */
+    public void setComboProdutoRetirar(javax.swing.JComboBox comboProdutoRetirar) {
+        if ( carrinho.getNumeroDeItens() > 0 ) {
+            comboProdutoRetirar.removeAllItems();
+            itensCarrinho = carrinho.getItensCarrinho();
+            for ( ItemCarrinho ic: itensCarrinho ) {
+                if ( comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome()) ) {
+                    itemCarrinhoExcluir = ic;
+                    botaoRetirarItemCarrinho.setEnabled(true);
+                }
+            }
+        }
+        this.comboProdutoRetirar = comboProdutoRetirar;
     }
     
 }

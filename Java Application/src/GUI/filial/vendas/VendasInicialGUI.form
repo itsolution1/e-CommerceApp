@@ -238,7 +238,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboProdutoRetirar" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="botaoRetirarProduto" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoRetirarItemCarrinho" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -252,7 +252,7 @@
                               <Component id="nomeCategoriaText6" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboProdutoRetirar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="botaoRetirarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="botaoRetirarItemCarrinho" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -279,12 +279,12 @@
                 <Property name="text" type="java.lang.String" value="Produto:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoRetirarProduto">
+            <Component class="javax.swing.JButton" name="botaoRetirarItemCarrinho">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Atualizar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRetirarProdutoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRetirarItemCarrinhoActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
