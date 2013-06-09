@@ -46,7 +46,7 @@ public class Carrinho {
     
     public synchronized void deletarItem(ItemCarrinho itemCarrinho){
         for (ItemCarrinho item : getItensCarrinho()) {
-            if (item.getProduto().getId() == itemCarrinho.produto.getId()) {
+            if (item.getProduto().getId() == itemCarrinho.getProduto().getId()) {
                 getItensCarrinho().remove(item);
             }
         }

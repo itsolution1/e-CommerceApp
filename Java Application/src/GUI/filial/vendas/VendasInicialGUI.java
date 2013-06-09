@@ -24,12 +24,13 @@ import jpa.Produto;
  */
 public class VendasInicialGUI extends javax.swing.JFrame {
     
-    private Carrinho            carrinho;
-    private Collection<ItemCarrinho> itensCarrinho;
-    private Filial filial;
-    private Produto produtoFilialEscolhido;
-    private ItemCarrinho itemCarrinhoExcluir;
-    private Collection<Produto> produtosFilial;
+    private Carrinho            carrinho = null;
+    private Collection<ItemCarrinho> itensCarrinho = null;
+    private Filial filial = null;
+    private Produto produtoFilialEscolhido = null;
+    private ItemCarrinho itemCarrinhoIncluir = null;
+    private ItemCarrinho itemCarrinhoExcluir = null;
+    private Collection<Produto> produtosFilial = null;
     
 
     /**
@@ -44,7 +45,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         updateTable();
         botaoIncluirProduto.setEnabled(false);
         botaoRetirarItemCarrinho.setEnabled(false);
-        
+        botaoFinalizar.setEnabled(false);
         
     }
     
@@ -176,11 +177,6 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         comboProdutoRetirar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboProdutoRetirarItemStateChanged(evt);
-            }
-        });
-        comboProdutoRetirar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboProdutoRetirarActionPerformed(evt);
             }
         });
 
@@ -320,19 +316,28 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                         this.produtoFilialEscolhido = p;
                         setContadorIncluir(this.contadorIncluir);
                     }
+                    setContadorIncluir(this.contadorIncluir);
                 }
+                setContadorIncluir(this.contadorIncluir);
             }
+            setContadorIncluir(this.contadorIncluir);
         }
+        setContadorIncluir(this.contadorIncluir);
     }//GEN-LAST:event_comboProdutoFilialItemStateChanged
 
     private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
-        //persistir na base o pedido
+        if ( produtoFilialEscolhido != null ) {
+            itemCarrinhoIncluir.setProduto(produtoFilialEscolhido);
+            itemCarrinhoIncluir.setQuantidade(Short.parseShort(contadorIncluir.getValue().toString()));
+            carrinho.adicionarItem(itemCarrinhoIncluir);
+            updateTable();
+            setComboProdutoRetirar(comboProdutoRetirar);
+            botaoRetirarItemCarrinho.setEnabled(false);
+            botaoFinalizar.setEnabled(false);
+        }
+        setComboProdutoRetirar(comboProdutoRetirar);
 
     }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
-
-    private void comboProdutoRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProdutoRetirarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboProdutoRetirarActionPerformed
 
     private void comboProdutoRetirarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoRetirarItemStateChanged
         if ( this.itemCarrinhoExcluir != null ) {
@@ -352,6 +357,9 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         if ( itemCarrinhoExcluir != null ) {
             carrinho.deletarItem(itemCarrinhoExcluir);
             updateTable();
+            if ( carrinho.getNumeroDeItens() == 0 ) {
+                botaoFinalizar.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_botaoRetirarItemCarrinhoActionPerformed
 
@@ -496,6 +504,9 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                     botaoRetirarItemCarrinho.setEnabled(true);
                 }
             }
+        }
+        if ( carrinho.getNumeroDeItens() == 0 ) {
+            botaoFinalizar.setEnabled(false);
         }
         this.comboProdutoRetirar = comboProdutoRetirar;
     }

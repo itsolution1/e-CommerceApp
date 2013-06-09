@@ -13,7 +13,7 @@ import jpa.Produto;
  */
 public class ItemCarrinho {
 
-    Produto produto;
+    private Produto produto;
     short quantidade;
 
     public ItemCarrinho(Produto produto, short quantidade) {
@@ -22,7 +22,7 @@ public class ItemCarrinho {
     }
     
     public void edit(Produto produto, short quantidade){
-        this.produto = produto;
+        this.setProduto(produto);
         this.quantidade = quantidade;
     }
 
@@ -36,6 +36,13 @@ public class ItemCarrinho {
 
     public void setQuantidade(short quantidade) {
         this.quantidade = quantidade;
+    }
+
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
 }
