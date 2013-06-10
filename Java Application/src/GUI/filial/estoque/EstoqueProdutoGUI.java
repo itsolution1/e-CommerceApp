@@ -10,6 +10,8 @@ import controller.ProdutoController;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import jpa.Categoria;
 import jpa.Filial;
 import jpa.Produto;
@@ -24,6 +26,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
     private ProdutoController produtoController = null;
     private FilialController filialController = null;
     private Collection<Produto> produtos;
+    private Collection<Produto> produtosAltera;
     private Produto produto;
     private Filial filial;
     
@@ -69,15 +72,11 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Contatos");
-        setPreferredSize(new java.awt.Dimension(0, 0));
-        setSize(new java.awt.Dimension(0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
-
-        jPanel1.setPreferredSize(new java.awt.Dimension(0, 0));
 
         titleFilial.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         titleFilial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -213,13 +212,13 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 3, Short.MAX_VALUE)))
+                        .addGap(0, 61, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(10, 10, 10)
                     .addComponent(title1)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(47, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,12 +238,12 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAlterar)
                     .addComponent(botaoVoltar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(75, 75, 75)
                     .addComponent(title1)
-                    .addContainerGap(319, Short.MAX_VALUE)))
+                    .addContainerGap(341, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,18 +251,18 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-576)/2, (screenSize.height-495)/2, 576, 495);
+        setBounds((screenSize.width-656)/2, (screenSize.height-584)/2, 656, 584);
     }// </editor-fold>//GEN-END:initComponents
     
     private void setControllers(){
@@ -284,31 +283,25 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
         //Categoria categoria = (Categoria)comboCategoria.getSelectedItem();
         //Produto produto = (Produto)comboProduto.getSelectedItem();
         setControllers();
-        
+
         try {
+            if ( produto != null ) {
+                int quantidade = Integer.parseInt(getNumeroQuantidade().getValue().toString() );
+                System.out.println(produto.getNome() + "\n" + produto.getId());
+                produto.setQuantidade( quantidade );
+                produtoController.edit(produto);
+                System.out.println(produto.getNome() + "\n" + produto.getId());
             
-            produto.setDescricao(txtDescricao.getText());
-            produto.setNome(txtNome.getText());
-            produto.setPreco(txtPreco.getText());
-            int quantidade = Integer.parseInt(numeroQuantidade.getValue().toString() );
-            produto.setQuantidade( quantidade );
-            Collection<Produto> produtosAtualizado = produtos;
-            produtosAtualizado.removeAll(produtos);
-            for(Produto p: produtos) {
-                if ( p.getNome().equals(produto.getNome()) ) {
-                    p.setQuantidade( quantidade );
-                    
-                }
-                produtosAtualizado.add(p);
+                JOptionPane.showMessageDialog(null, "Estoque do produto " + produto.getNome() + " alterado com sucesso.");
+                new GUI.filial.InicioGUI(filial).setVisible(true);
+                dispose();
             }
-            filial.setProdutos(produtosAtualizado);
             
-            JOptionPane.showMessageDialog(null, "Estoque do produto " + produto.getNome() + " alterado com sucesso.");
-            new GUI.filial.InicioGUI(filial).setVisible(true);
-            dispose();
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao alterar produto: " + produto.getNome());
+            new GUI.filial.InicioGUI(filial).setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_botaoAlterarActionPerformed
 
@@ -332,6 +325,13 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                         txtNome.setText(produto.getNome());
                         txtDescricao.setText(produto.getDescricao());
                         txtPreco.setText(produto.getPreco());
+                        SpinnerModel sm = new SpinnerNumberModel(produto.getQuantidade(), 0, 9999999, 1);
+                        this.numeroQuantidade.setModel(sm);
+                        
+                        
+                        
+                        System.out.println(produto.getNome() + "\n" +
+                                           produto.getId());
                     }
                 }
             }
@@ -379,6 +379,7 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
                 for (Produto p: produtos) {
                     if ( comboProduto.getSelectedItem().equals(p.getNome()) ){
                         produto = p;
+                        setNumeroQuantidade(numeroQuantidade);
                     }
                 }
             }
@@ -401,6 +402,23 @@ public class EstoqueProdutoGUI extends javax.swing.JFrame {
     public void setProdutos(Collection<Produto> produtos) {
         
         this.produtos = produtos;
+    }
+
+    /**
+     * @return the numeroQuantidade
+     */
+    public javax.swing.JSpinner getNumeroQuantidade() {
+        return numeroQuantidade;
+    }
+
+    /**
+     * @param numeroQuantidade the numeroQuantidade to set
+     */
+    public void setNumeroQuantidade(javax.swing.JSpinner numeroQuantidade) {
+        System.out.println("QTD" + produto.getQuantidade());
+        numeroQuantidade.setValue(new Long(produto.getQuantidade()));
+        
+        this.numeroQuantidade = numeroQuantidade;
     }
     
 

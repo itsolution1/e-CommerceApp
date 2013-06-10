@@ -350,6 +350,7 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
                     for ( Produto p: produtosFilial ) {
                         if ( p.getNome().equals( comboProdutoFilial.getSelectedItem().toString() ) ) {
                             produtoIncluir = p;
+                            
                         }
                     }
                 }
@@ -381,23 +382,28 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
             if ( categoria != null ) {
                 if ( produtoIncluir != null ) {
                     if ( produtosFilial != null ) {
-                        produtoIncluir.setFilial(filial);
-                        produtosFilial.add(produtoIncluir);
-                        
-                        try{
-                            filial.setProdutos(produtosFilial);
-                        } catch(Exception e) {
-                            System.err.println(e.getMessage());
-                        }
-
-                        filialController.edit(filial);
                         Produto novoProdutoFilial = new Produto();
                         novoProdutoFilial.setNome(produtoIncluir.getNome());
                         novoProdutoFilial.setPreco(produtoIncluir.getPreco());
                         novoProdutoFilial.setDescricao(produtoIncluir.getDescricao());
                         novoProdutoFilial.setQuantidade(produtoIncluir.getQuantidade());
-                        novoProdutoFilial.setFilial(produtoIncluir.getFilial());
-                        produtoController.create(novoProdutoFilial);
+                        novoProdutoFilial.setFilial(filial);
+
+                        try{
+                            
+                            //produtoController.create(novoProdutoFilial);
+                            produtosFilial.add(novoProdutoFilial);
+                            filial.setProdutos(produtosFilial);
+                            filialController.edit(filial);
+                            
+                            
+                            
+                        } catch(Exception e) {
+                            System.err.println(e.getMessage());
+                        }
+
+                        
+                        
                         
                         setComboProdutoFilial(comboProdutoFilial);
                         setComboProduto(comboProduto);
@@ -513,11 +519,20 @@ public class RelacionarFilialGUI extends javax.swing.JFrame {
             produtosIncluir = categoria.getProdutos();
             produtosFilial = filial.getProdutos();
             comboProduto.removeAllItems();
-            for (Produto prod : produtosIncluir) {
-                if ( !produtosFilial.contains(prod) ) {
-                    comboProduto.addItem(prod.getNome());
+            for (Produto prodIncluir : produtosIncluir) {
+                boolean existe = false;
+                for ( Produto prodFilial: produtosFilial ) {
+                    if ( !prodIncluir.getNome().equals(prodFilial.getNome()) ) {
+                        existe = false;
+                    } else {
+                        existe = true;
+                    }
+                }
+                if ( existe == false ) {
+                    comboProduto.addItem(prodIncluir.getNome());
                 }
             }
+            
             for (Produto p: produtosIncluir) {
                 if ( comboProduto.getSelectedItem() != null && comboProduto.getSelectedItem().equals( p.getNome() ) ) {
                     produtoIncluir = p;

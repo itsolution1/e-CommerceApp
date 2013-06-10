@@ -39,13 +39,14 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     public VendasInicialGUI(Filial filial) {
         this.filial = filial;
         initComponents();
+        botaoIncluirProduto.setEnabled(false);
+        botaoRetirarItemCarrinho.setEnabled(false);
+        botaoFinalizar.setEnabled(false);
         carrinho = new Carrinho();
         title.setText("Filial " + this.filial.getNome());
         setComboProdutoFilial(comboProdutoFilial);
         updateTable();
-        botaoIncluirProduto.setEnabled(false);
-        botaoRetirarItemCarrinho.setEnabled(false);
-        botaoFinalizar.setEnabled(false);
+        
         
     }
     
@@ -140,22 +141,22 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(nomeCategoriaText4)
                 .addGap(18, 18, 18)
-                .addComponent(comboProdutoFilial, 0, 295, Short.MAX_VALUE)
+                .addComponent(comboProdutoFilial, 0, 310, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contadorIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(botaoIncluirProduto)
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
         panelIncluirCategoria1Layout.setVerticalGroup(
             panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIncluirCategoria1Layout.createSequentialGroup()
-                .addGroup(panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoIncluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(contadorIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboProdutoFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nomeCategoriaText4)))
+                .addGap(5, 5, 5)
+                .addGroup(panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contadorIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboProdutoFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeCategoriaText4)
+                    .addComponent(botaoIncluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -276,7 +277,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVoltar)
                     .addComponent(botaoFinalizar))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -286,18 +287,18 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-616)/2, (screenSize.height-534)/2, 616, 534);
+        setBounds((screenSize.width-657)/2, (screenSize.height-581)/2, 657, 581);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
@@ -314,26 +315,22 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 for (Produto p : produtosFilial) {
                     if ( getComboProdutoFilial().getSelectedItem() != null && getComboProdutoFilial().getSelectedItem().equals(p.getNome()) ) {
                         this.produtoFilialEscolhido = p;
-                        setContadorIncluir(this.contadorIncluir);
+                        SpinnerModel sm = new SpinnerNumberModel(0, 0, this.produtoFilialEscolhido.getQuantidade(), 1);
+                        this.contadorIncluir.setModel(sm);
                     }
-                    setContadorIncluir(this.contadorIncluir);
                 }
-                setContadorIncluir(this.contadorIncluir);
             }
-            setContadorIncluir(this.contadorIncluir);
         }
-        setContadorIncluir(this.contadorIncluir);
     }//GEN-LAST:event_comboProdutoFilialItemStateChanged
 
     private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
         if ( produtoFilialEscolhido != null ) {
-            itemCarrinhoIncluir.setProduto(produtoFilialEscolhido);
-            itemCarrinhoIncluir.setQuantidade(Short.parseShort(contadorIncluir.getValue().toString()));
-            carrinho.adicionarItem(itemCarrinhoIncluir);
+            ItemCarrinho novoItem = new ItemCarrinho(produtoFilialEscolhido,Short.parseShort(contadorIncluir.getValue().toString()));
+            carrinho.adicionarItem(novoItem);
             updateTable();
             setComboProdutoRetirar(comboProdutoRetirar);
-            botaoRetirarItemCarrinho.setEnabled(false);
-            botaoFinalizar.setEnabled(false);
+            botaoRetirarItemCarrinho.setEnabled(true);
+            botaoFinalizar.setEnabled(true);
         }
         setComboProdutoRetirar(comboProdutoRetirar);
 
@@ -344,7 +341,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             if ( carrinho.getNumeroDeItens() > 0 ) {
                 itensCarrinho = carrinho.getItensCarrinho();
                 for ( ItemCarrinho ic: itensCarrinho ) {
-                    if ( comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome()) ) {
+                    if ( comboProdutoRetirar.getSelectedItem().equals( ic.getProduto().getNome() ) ) {
                         itemCarrinhoExcluir = ic;
                     }
                 }
@@ -437,10 +434,11 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             comboProdutoFilial.removeAllItems();
             produtosFilial = this.filial.getProdutos();
             if ( produtosFilial != null && !produtosFilial.isEmpty() ) {
-                botaoIncluirProduto.setEnabled(false);
+                botaoIncluirProduto.setEnabled(true);
                 for ( Produto p: produtosFilial ) {
                     comboProdutoFilial.addItem(p.getNome());
                 }
+                
             }
         }
         this.comboProdutoFilial = comboProdutoFilial;
@@ -457,16 +455,9 @@ public class VendasInicialGUI extends javax.swing.JFrame {
      * @param contadorIncluir the contadorIncluir to set
      */
     public void setContadorIncluir(javax.swing.JSpinner contadorIncluir) {
-        int quantidade = produtoFilialEscolhido.getQuantidade();
-        if ( quantidade > 0 ) {
-            SpinnerModel sm = new SpinnerNumberModel(0, 0, quantidade, 2);
-            contadorIncluir = new JSpinner(sm);
-        } else {
-            SpinnerModel sm = new SpinnerNumberModel(0, -1, -1, 2);
-            contadorIncluir = new JSpinner(sm);
-        }
-        
-        this.contadorIncluir = contadorIncluir;
+        SpinnerModel sm = new SpinnerNumberModel(0, -50, 100, 2);
+        JSpinner spinner = new JSpinner(sm);
+        this.contadorIncluir = spinner;
     }
 
     /**
@@ -495,18 +486,22 @@ public class VendasInicialGUI extends javax.swing.JFrame {
      * @param comboProdutoRetirar the comboProdutoRetirar to set
      */
     public void setComboProdutoRetirar(javax.swing.JComboBox comboProdutoRetirar) {
-        if ( carrinho.getNumeroDeItens() > 0 ) {
+        if ( !carrinho.getItensCarrinho().isEmpty() ) {
             comboProdutoRetirar.removeAllItems();
             itensCarrinho = carrinho.getItensCarrinho();
+            for ( ItemCarrinho ic: itensCarrinho ) {
+                comboProdutoRetirar.addItem(ic.getProduto().getNome());
+            }
             for ( ItemCarrinho ic: itensCarrinho ) {
                 if ( comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome()) ) {
                     itemCarrinhoExcluir = ic;
                     botaoRetirarItemCarrinho.setEnabled(true);
+                    botaoFinalizar.setEnabled(true);
                 }
             }
         }
-        if ( carrinho.getNumeroDeItens() == 0 ) {
-            botaoFinalizar.setEnabled(false);
+        if ( carrinho.getNumeroDeItens() > 0 ) {
+            botaoFinalizar.setEnabled(true);
         }
         this.comboProdutoRetirar = comboProdutoRetirar;
     }
