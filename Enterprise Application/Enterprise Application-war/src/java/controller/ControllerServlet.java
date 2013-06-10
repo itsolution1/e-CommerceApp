@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jpa.Categoria;
 import jpa.Produto;
+import jpa.WishList;
 import jpa.facade.CategoriaFacadeRemote;
 import jpa.facade.ProdutoFacadeRemote;
 /**
@@ -48,7 +49,7 @@ public class ControllerServlet extends HttpServlet {
         public void init() throws ServletException{
         
         //guarda lista de categorias no contexto da servlet
-            getServletContext().setAttribute("categorias", categoriaFacade.findAll());
+           getServletContext().setAttribute("categorias", categoriaFacade.findAll());
         }
 
     /**
@@ -109,6 +110,16 @@ public class ControllerServlet extends HttpServlet {
             // se o usuario quer ver a lista
         } else if (userPath.equals("/verLista")) {
             // TODO: Implementar lista de desejos
+            
+            String clear = request.getParameter("clear");
+
+            if ((clear != null) && clear.equals("true")) {
+
+            WishList lista = (WishList) session.getAttribute("lista");
+            lista.clear();
+            }
+
+            userPath = "/wishlist";
             // se o usuario quer encerrar a sessão
         } else if (userPath.equals("/logout")) {
             // TODO: Implementar logout
@@ -142,6 +153,7 @@ public class ControllerServlet extends HttpServlet {
         String userPath = request.getServletPath();
         HttpSession session = request.getSession();
         Carrinho cart = (Carrinho) session.getAttribute("cart");
+        WishList lista = (WishList) session.getAttribute("lista");
 
         // se a acao addCarrinho for chamada
         if (userPath.equals("/addCarrinho")) {
@@ -168,7 +180,7 @@ public class ControllerServlet extends HttpServlet {
             String produtoId = request.getParameter("produtoId");
             String quantidade = request.getParameter("quantidade");
 
-            Produto produto = produtoFacade.find(Integer.parseInt(produtoId));
+            Produto produto = produtoFacade.find(Long.parseLong(produtoId));
             cart.update(produto, quantidade);
 
             userPath = "/carrinho";
@@ -178,8 +190,22 @@ public class ControllerServlet extends HttpServlet {
         } else if (userPath.equals("/addLista")) {
             // TODO: Implement acao addLista
             
-                              
+            boolean logon = true;
             
+            if ((lista == null) && (logon)) {
+
+                lista = new WishList();
+                session.setAttribute("lista", lista);
+            }
+            String produtoId = request.getParameter("produtoId");
+                        
+             if (!produtoId.isEmpty()) {
+
+                Produto produto = produtoFacade.find(Long.parseLong(produtoId));
+                lista.addItem(produto);
+            }
+             
+            userPath = "/categoria";
             // se acao comprar for chamada
         } else if (userPath.equals("/comprar")) {
             // TODO: implementar acao comprar

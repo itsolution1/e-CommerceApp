@@ -61,14 +61,16 @@
 
         <c:forEach var="cartItem" items="${cart.items}" varStatus="iter">
 
-          <c:set var="product" value="${cartItem.produto}"/>
+          <c:set var="produto" value="${cartItem.produto}"/>
 
           <tr class="${((iter.index % 2) == 0) ? 'lightBlue' : 'white'}">
             <td>
-              [imagem produto]
+                [imagem produto]
             </td>
 
-            <td>${produto.nome}</td>
+            <td>
+               ${produto.nome} 
+            </td>
 
             <td>
                 R$ ${cartItem.total}
@@ -79,13 +81,13 @@
             <td>
                 <form action="<c:url value='/atualizaCarrinho'/>" method="post">
                     <input type="hidden"
-                           name="productId"
+                           name="produtoId"
                            value="${produto.id}">
                     <input type="text"
                            maxlength="2"
                            size="2"
                            value="${cartItem.quantidade}"
-                           name="quantity"
+                           name="quantidade"
                            style="margin:5px">
                     <input type="submit"
                            name="submit"

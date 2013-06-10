@@ -6,6 +6,9 @@
     <class>jpa.Categoria</class>
     <class>jpa.Produto</class>
     <class>jpa.Filial</class>
+    <class>jpa.Cliente</class>
+    <class>jpa.ItemWishList</class>
+    <class>jpa.WishList</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <!--      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>

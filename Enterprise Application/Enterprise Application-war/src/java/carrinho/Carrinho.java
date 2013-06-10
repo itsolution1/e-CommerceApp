@@ -49,6 +49,7 @@ public class Carrinho {
     public synchronized void update(Produto produto, String quantidade) {
 
         short qty = -1;
+        String id1, id2;
 
         // cast quantity as short
         qty = Short.parseShort(quantidade);
@@ -58,8 +59,9 @@ public class Carrinho {
             ItemCarrinho item = null;
 
             for (ItemCarrinho scItem : items) {
+                
 
-                if (scItem.getProduto().getId() == produto.getId()) {
+                if (scItem.produto.getNome().equals(produto.getNome())) {
 
                     if (qty != 0) {
                         // set item quantity to new value

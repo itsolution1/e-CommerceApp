@@ -1,31 +1,30 @@
 <%-- 
-    Document   : wishlist
+    Document   : lista
     Created on : May 18, 2013, 12:51:06 AM
     Author     : juliano
 --%>
 
-
-    <c:choose>
-        <c:when test="${wishlist.numeroDeItens > 1}">
-            <p>Seu carrinho contem ${wishlist.numeroDeItens} items.</p>
+     <c:choose>
+        <c:when test="${lista.numeroDeItens > 1}">
+            <p>Sua Lista contem ${lista.numeroDeItens} items.</p>
         </c:when>
-        <c:when test="${wishlist.numeroDeItens == 1}">
-            <p>Sua WishList contem ${wishlist.numeroDeItens} item.</p>
+        <c:when test="${lista.numeroDeItens == 1}">
+            <p>Sua Lista contem ${lista.numeroDeItens} item.</p>
         </c:when>
         <c:otherwise>
-            <p>Sua WishList está vazia</p>
+            <p>Sua Lista está vazia</p>
         </c:otherwise>
     </c:choose>
 
     <div id="actionBar">
         <%-- limpa cart widget --%>
-        <c:if test="${!empty wishlist && wishlist.numeroDeItens != 0}">
+        <c:if test="${!empty lista && lista.numeroDeItens != 0}">
 
-            <c:url var="url" value="verCarrinho">
+            <c:url var="url" value="verLista">
                 <c:param name="clear" value="true"/>
             </c:url>
 
-            <a href="${url}" class="bubble hMargin">limpar carrinho</a>
+            <a href="${url}" class="bubble hMargin">limpar lista</a>
         </c:if>
 
         <%-- continua shopping widget --%>
@@ -46,14 +45,14 @@
         <a href="${url}" class="bubble hMargin">continuar comprando</a>
 
         <%-- checkout widget --%>
-        <c:if test="${!empty cart && cart.numeroDeItens != 0}">
-            <a href="<c:url value='checkout'/>" class="bubble hMargin">Concluir compra &#x279f;</a>
+        <c:if test="${!empty lista && lista.numeroDeItens != 0}">
+            <a href="<c:url value='gravaLista'/>" class="bubble hMargin">Salvar Lista &#x279f;</a>
         </c:if>
     </div>
 
-    <c:if test="${!empty cart && cart.numeroDeItens != 0}">
+    <c:if test="${!empty lista && lista.numeroDeItens != 0}">
 
-      <h4 id="subtotal">subtotal: R$ ${cart.subtotal}</h4>
+      <h4 id="subtotal">subtotal: R$ ${lista.subtotal}</h4>
 
       <table id="cartTable">
 
@@ -64,9 +63,9 @@
             <th>quantidade</th>
         </tr>
 
-        <c:forEach var="cartItem" items="${cart.items}" varStatus="iter">
+        <c:forEach var="listItem" items="${lista.items}" varStatus="iter">
 
-          <c:set var="product" value="${cartItem.produto}"/>
+          <c:set var="produto" value="${listItem.produto}"/>
 
           <tr class="${((iter.index % 2) == 0) ? 'lightBlue' : 'white'}">
             <td>
@@ -74,27 +73,16 @@
             </td>
 
             <td>${produto.nome}</td>
-
+            
             <td>
-                R$ ${cartItem.total}
-                <br>
                 <span class="smallText">( R$ ${produto.preco} / un )</span>
             </td>
 
             <td>
-                <form action="<c:url value='/atualizaCarrinho'/>" method="post">
-                    <input type="hidden"
-                           name="productId"
-                           value="${produto.id}">
-                    <input type="text"
-                           maxlength="2"
-                           size="2"
-                           value="${cartItem.quantidade}"
-                           name="quantity"
-                           style="margin:5px">
+                <form action="<c:url value='/removeLista'/>" method="post">
                     <input type="submit"
-                           name="submit"
-                           value="update">
+                           name="remove"
+                           value="remover">
                 </form>
             </td>
           </tr>

@@ -56,10 +56,16 @@
                         <input type="submit"
                                name="submit"
                                value="+Carrinho">
-                        <input type="submit"
+                    </form>
+                        
+                    <form action="<c:url value='addLista'/>" method="post">
+                              <input type="hidden"
+                               name="produtoId"
+                               value="${produto.id}">
+                              <input type="submit"
                                name="submitList"
                                value="+WishList">
-                    </form>
+                    </form>                        
                 </td>
             </tr>
 

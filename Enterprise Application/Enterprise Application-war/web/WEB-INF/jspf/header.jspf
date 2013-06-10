@@ -9,26 +9,60 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/lojaonline.css">
         <title>LojaOnline</title>
-        
+
     </head>
     <body>
         <div id="main">
             <div id="header">
                 <div id="widgetBar">
 
-                    <div class="headerWidget">
-                        [  ]
+                    <%--Lista widget--%>                    
+                    <div class="headerWidget"> 
+                        [Lista]
+                        <%-- If 'numberOfItems' property doesn't exist, or if number of items
+                             in cart is 0, output '0', otherwise output 'numberOfItems' --%>
+                        <span class="horizontalMargin">
+                            <c:choose>
+                                <c:when test="${lista.numeroDeItens == null}">
+                                    0
+                                </c:when>
+                                <c:otherwise>
+                                    ${lista.numeroDeItens}
+                                </c:otherwise>
+                            </c:choose>
+
+                            <%-- Handle singular/plural forms of 'item' --%>
+                            <c:choose>
+                                <c:when test="${lista.numeroDeItens == 1}">
+                                    item
+                                </c:when>
+                                <c:otherwise>
+                                    itens
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+
+                        <c:if test="${!empty lista && lista.numeroDeItens != 0 &&
+
+                                      !fn:contains(pageContext.request.servletPath,'/wishlist') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/wishlist'}">
+
+                              <a href="<c:url value='verLista'/>" class="bubble">
+                                  [ver Lista]
+                              </a>
+                        </c:if>                       
+
                     </div>
 
-                <%-- checkout widget --%>
+                    <%-- checkout widget --%>
                     <div class="headerWidget">
 
-                       <%-- tests for the following:
-                            * if cart exists and is not empty
-                            * if the servlet path does not contain '/checkout'
-                            * if the requested view is not checkout
-                            * if the servlet path does not contain '/cart'
-                            * if the requested view is not cart
+                        <%-- tests for the following:
+                             * if cart exists and is not empty
+                             * if the servlet path does not contain '/checkout'
+                             * if the requested view is not checkout
+                             * if the servlet path does not contain '/cart'
+                             * if the requested view is not cart
 
                             <c:if test="${!empty sessionScope.cart}">
                                 CART EXISTS AND IS NOT NULL
@@ -54,50 +88,50 @@
                                       !fn:contains(pageContext.request.servletPath,'/carrinho') &&
                                       requestScope['javax.servlet.forward.servlet_path'] ne '/carrinho'}">
 
-                      <a href="<c:url value='concluirCompra'/>" class="bubble">
-                        Concluir Compra &#x279f;
-                      </a>
-                    </c:if>
+                              <a href="<c:url value='concluirCompra'/>" class="bubble">
+                                  Concluir Compra &#x279f;
+                              </a>
+                        </c:if>
                     </div>
 
-                <%-- shopping cart widget --%>
-                  <div class="headerWidget" id="viewCart">
+                    <%-- shopping cart widget --%>
+                    <div class="headerWidget" id="viewCart">
 
-                    [Carrinho]
+                        [Carrinho]
 
-                  <%-- If 'numberOfItems' property doesn't exist, or if number of items
-                       in cart is 0, output '0', otherwise output 'numberOfItems' --%>
-                    <span class="horizontalMargin">
-                      <c:choose>
-                        <c:when test="${cart.numeroDeItens == null}">
-                          0
-                        </c:when>
-                        <c:otherwise>
-                          ${cart.numeroDeItens}
-                        </c:otherwise>
-                      </c:choose>
+                        <%-- If 'numberOfItems' property doesn't exist, or if number of items
+                             in cart is 0, output '0', otherwise output 'numberOfItems' --%>
+                        <span class="horizontalMargin">
+                            <c:choose>
+                                <c:when test="${cart.numeroDeItens == null}">
+                                    0
+                                </c:when>
+                                <c:otherwise>
+                                    ${cart.numeroDeItens}
+                                </c:otherwise>
+                            </c:choose>
 
-                  <%-- Handle singular/plural forms of 'item' --%>
-                      <c:choose>
-                        <c:when test="${cart.numeroDeItens == 1}">
-                          item
-                        </c:when>
-                        <c:otherwise>
-                          itens
-                        </c:otherwise>
-                      </c:choose>
-                    </span>
+                            <%-- Handle singular/plural forms of 'item' --%>
+                            <c:choose>
+                                <c:when test="${cart.numeroDeItens == 1}">
+                                    item
+                                </c:when>
+                                <c:otherwise>
+                                    itens
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
 
-                    <c:if test="${!empty cart && cart.numeroDeItens != 0 &&
+                        <c:if test="${!empty cart && cart.numeroDeItens != 0 &&
 
-                                  !fn:contains(pageContext.request.servletPath,'/cart') &&
-                                  requestScope['javax.servlet.forward.servlet_path'] ne '/cart'}">
+                                      !fn:contains(pageContext.request.servletPath,'/cart') &&
+                                      requestScope['javax.servlet.forward.servlet_path'] ne '/cart'}">
 
-                      <a href="<c:url value='verCarrinho'/>" class="bubble">
-                          [ver carrinho]
-                      </a>
-                    </c:if>
-                </div>
+                              <a href="<c:url value='verCarrinho'/>" class="bubble">
+                                  [ver carrinho]
+                              </a>
+                        </c:if>
+                    </div>
                 </div>
 
                 <a href="<c:url value='/'/>">
