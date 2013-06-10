@@ -337,17 +337,30 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
 
     private void comboProdutoRetirarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoRetirarItemStateChanged
-        if ( this.itemCarrinhoExcluir != null ) {
+        
             if ( carrinho.getNumeroDeItens() > 0 ) {
                 itensCarrinho = carrinho.getItensCarrinho();
-                for ( ItemCarrinho ic: itensCarrinho ) {
-                    if ( comboProdutoRetirar.getSelectedItem().equals( ic.getProduto().getNome() ) ) {
-                        itemCarrinhoExcluir = ic;
+                if (itensCarrinho != null && !itensCarrinho.isEmpty()) {
+                    
+                    if ( comboProdutoRetirar != null ) {
+                        comboProdutoRetirar.removeAllItems();
+                    }
+                    
+                    for (ItemCarrinho ic : itensCarrinho) {
+
+                        comboProdutoRetirar.addItem(ic.getProduto().getNome());
+                    }
+
+                    for (ItemCarrinho ic : itensCarrinho) {
+                        if (comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome())) {
+                            itemCarrinhoExcluir = ic;
+                        }
                     }
                 }
+                
             }
             
-        }
+        
     }//GEN-LAST:event_comboProdutoRetirarItemStateChanged
 
     private void botaoRetirarItemCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetirarItemCarrinhoActionPerformed
