@@ -4,15 +4,12 @@
  */
 package GUI.filial.estoque;
 
-import controller.CategoriaController;
 import controller.FilialController;
 import controller.ProdutoController;
 import java.util.Collection;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import jpa.Categoria;
 import jpa.Filial;
 import jpa.Produto;
 

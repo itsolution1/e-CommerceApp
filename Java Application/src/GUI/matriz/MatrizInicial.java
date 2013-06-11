@@ -53,6 +53,7 @@ public class MatrizInicial extends javax.swing.JFrame {
         botaoFilialAlterar = new javax.swing.JButton();
         botaoFilialExcluir = new javax.swing.JButton();
         botaoProdutoFilial = new javax.swing.JButton();
+        botaoEnviarPedidoParaFilial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ITSolution - Matriz");
@@ -291,6 +292,14 @@ public class MatrizInicial extends javax.swing.JFrame {
             }
         });
 
+        botaoEnviarPedidoParaFilial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        botaoEnviarPedidoParaFilial.setText("Enviar Pedido para Filial");
+        botaoEnviarPedidoParaFilial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEnviarPedidoParaFilialActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -302,9 +311,11 @@ public class MatrizInicial extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botaoSairMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botaoSairMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -315,7 +326,8 @@ public class MatrizInicial extends javax.swing.JFrame {
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(botaoProdutoFilial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                        .addComponent(botaoProdutoFilial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(botaoEnviarPedidoParaFilial))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -340,8 +352,10 @@ public class MatrizInicial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoEnviarPedidoParaFilial)
+                .addGap(18, 18, 18)
                 .addComponent(botaoSairMatriz)
-                .addGap(78, 78, 78))
+                .addGap(29, 29, 29))
         );
 
         jPanel4.getAccessibleContext().setAccessibleName("Controles");
@@ -421,6 +435,11 @@ public class MatrizInicial extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void botaoEnviarPedidoParaFilialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnviarPedidoParaFilialActionPerformed
+        new GUI.matriz.pedidos.EnviarPedidosGUI().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_botaoEnviarPedidoParaFilialActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -459,6 +478,7 @@ public class MatrizInicial extends javax.swing.JFrame {
     private javax.swing.JButton botaoCategoriaAlterar;
     private javax.swing.JButton botaoCategoriaExcluir;
     private javax.swing.JButton botaoCategoriaIncluir;
+    private javax.swing.JButton botaoEnviarPedidoParaFilial;
     private javax.swing.JButton botaoFilialAlterar;
     private javax.swing.JButton botaoFilialExcluir;
     private javax.swing.JButton botaoFilialIncluir;

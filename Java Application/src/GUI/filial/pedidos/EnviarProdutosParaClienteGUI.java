@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.filial.vendas;
+package GUI.filial.pedidos;
 
+import GUI.filial.vendas.*;
 import GUI.matriz.filial.*;
 import controller.PedidoController;
 import java.util.Collection;
@@ -22,7 +23,7 @@ import jpa.Produto;
  *
  * @author Calebe de Paula Bianchini
  */
-public class VendasInicialGUI extends javax.swing.JFrame {
+public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
     
     private Carrinho            carrinho = null;
     private Collection<ItemCarrinho> itensCarrinho = null;
@@ -35,7 +36,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     /**
      * Creates new form ContatoGUI
      */
-    public VendasInicialGUI(Filial filial) {
+    public EnviarProdutosParaClienteGUI(Filial filial) {
         this.filial = filial;
         initComponents();
         botaoIncluirProduto.setEnabled(false);

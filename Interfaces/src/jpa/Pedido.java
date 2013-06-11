@@ -109,8 +109,14 @@ public class Pedido implements Serializable, Cloneable {
     /**
      * @param valorTotal the valorTotal to set
      */
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setValorTotal() {
+        if ( itensPedido != null ) {
+            for(ItemPedido item: itensPedido) {
+                this.valorTotal += Double.parseDouble(item.getProduto().getPreco()) * item.getQuantidade();
+            }
+        } else {
+            this.valorTotal = 0.0;
+        }
     }
 
     /**

@@ -6,7 +6,7 @@ package jpa.facade;
 
 import java.util.List;
 import javax.ejb.Remote;
-import jpa.Categoria;
+import jpa.Pedido;
 
 /**
  *
@@ -15,18 +15,17 @@ import jpa.Categoria;
 @Remote
 public interface PedidoFacadeRemote {
 
-    void create(Categoria categoria);
+    void create(Pedido pedido);
 
-    void edit(Categoria categoria);
+    void edit(Pedido pedido);
 
-    void remove(Categoria categoria);
+    void remove(Pedido pedido);
 
-    Categoria find(Object id);
+    Pedido find(Object id);
 
-    List<Categoria> findAll();
+    List<Pedido> findAll();
 
-    List<Categoria> findRange(int[] range);
+    List<Pedido> findRange(int[] range);
 
-    int count();
-    
+    int count();  
 }

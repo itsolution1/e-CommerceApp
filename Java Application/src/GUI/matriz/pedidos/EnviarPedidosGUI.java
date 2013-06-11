@@ -2,28 +2,42 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.matriz.filial;
+package GUI.matriz.pedidos;
 
+import GUI.matriz.categoria.*;
+import controller.CategoriaController;
 import controller.FilialController;
+import controller.PedidoController;
+import java.util.Collection;
 import javax.swing.JOptionPane;
+import jpa.Categoria;
 import jpa.Filial;
+import jpa.Pedido;
 
 /**
  *
- * @author GPinzegher
+ * @author Calebe de Paula Bianchini
  */
-public class AlterarFilialGUI extends javax.swing.JFrame {
+public class EnviarPedidosGUI extends javax.swing.JFrame {
 
+    private CategoriaController categoriaController = null;
+    private PedidoController pedidoController = null;
     private FilialController filialController = null;
-    private Filial[] filiais;
+    private Collection<Filial> filiais;
+    private Filial filial = null;
+    private Collection<Pedido> pedidos;
+    private Collection<Pedido> pedidosEnviar;
+    private Pedido pedido = null;
+    
     //private String categoriaAtual;
 
     /**
      * Creates new form ContatoGUI
      */
-    public AlterarFilialGUI() {
+    public EnviarPedidosGUI() {
         initComponents();
         setComboFilial(comboFilial);
+        setComboPedidos(comboPedidos);
     }
 
     //tabela com as categorias
@@ -40,11 +54,11 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         itsolution_logo = new javax.swing.JLabel();
         panelIncluirCategoria = new javax.swing.JPanel();
-        nomeCategoriaText3 = new javax.swing.JLabel();
+        txtPedido = new javax.swing.JLabel();
+        comboPedidos = new javax.swing.JComboBox();
+        txtFilial = new javax.swing.JLabel();
         comboFilial = new javax.swing.JComboBox();
-        nomeCategoriaText4 = new javax.swing.JLabel();
-        textNovoNomeCategoria = new javax.swing.JTextField();
-        botaoAlterarCategoria = new javax.swing.JButton();
+        botaoEnviarPedido = new javax.swing.JButton();
         botaoVoltarExcluirCategoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -52,28 +66,33 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title.setText("Alterar Filial");
+        title.setText("Enviar Pedidos");
         title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         itsolution_logo.setText("ITSolution");
 
         panelIncluirCategoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        nomeCategoriaText3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText3.setText("Filial:");
+        txtPedido.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtPedido.setText("Pedido");
 
-        comboFilial.addActionListener(new java.awt.event.ActionListener() {
+        comboPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboFilialActionPerformed(evt);
+                comboPedidosActionPerformed(evt);
             }
         });
 
-        nomeCategoriaText4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText4.setText("Novo Nome:");
+        txtFilial.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtFilial.setText("Filial:");
 
-        textNovoNomeCategoria.addActionListener(new java.awt.event.ActionListener() {
+        comboFilial.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboFilialItemStateChanged(evt);
+            }
+        });
+        comboFilial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNovoNomeCategoriaActionPerformed(evt);
+                comboFilialActionPerformed(evt);
             }
         });
 
@@ -84,33 +103,33 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
             .addGroup(panelIncluirCategoriaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nomeCategoriaText3)
-                    .addComponent(nomeCategoriaText4))
+                    .addComponent(txtPedido)
+                    .addComponent(txtFilial))
                 .addGap(18, 18, 18)
-                .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboFilial, 0, 354, Short.MAX_VALUE)
-                    .addComponent(textNovoNomeCategoria))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboPedidos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboFilial, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelIncluirCategoriaLayout.setVerticalGroup(
             panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIncluirCategoriaLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeCategoriaText3)
-                    .addComponent(comboFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPedido)
+                    .addComponent(comboPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelIncluirCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeCategoriaText4)
-                    .addComponent(textNovoNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(txtFilial)
+                    .addComponent(comboFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        botaoAlterarCategoria.setText("Alterar");
-        botaoAlterarCategoria.setToolTipText("");
-        botaoAlterarCategoria.addActionListener(new java.awt.event.ActionListener() {
+        botaoEnviarPedido.setText("Enviar");
+        botaoEnviarPedido.setToolTipText("");
+        botaoEnviarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAlterarCategoriaActionPerformed(evt);
+                botaoEnviarPedidoActionPerformed(evt);
             }
         });
 
@@ -130,19 +149,14 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                         .addComponent(itsolution_logo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 49, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botaoVoltarExcluirCategoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoAlterarCategoria)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoVoltarExcluirCategoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoEnviarPedido))
+                    .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,16 +169,16 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
                 .addComponent(panelIncluirCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoAlterarCategoria)
+                    .addComponent(botaoEnviarPedido)
                     .addComponent(botaoVoltarExcluirCategoria))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -173,92 +187,134 @@ public class AlterarFilialGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-589)/2, (screenSize.height-280)/2, 589, 280);
+        setBounds((screenSize.width-585)/2, (screenSize.height-260)/2, 585, 260);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoAlterarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarCategoriaActionPerformed
+    private void botaoEnviarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnviarPedidoActionPerformed
         
-        for (int i = 0; i < filiais.length; i++) {
-            if (filiais[i].getNome().equals(comboFilial.getSelectedItem().toString())) {
-                if (!filiais[i].getNome().equals(textNovoNomeCategoria.getText())) {
-                    dispose();
-                    JOptionPane.showMessageDialog(null, "Filial '" + filiais[i].getNome()
-                            + "' alterado para '" + textNovoNomeCategoria.getText() + "' com sucesso.");
-                    filiais[i].setNome(textNovoNomeCategoria.getText());
-                    filialController.edit(filiais[i]);
+        
+    }//GEN-LAST:event_botaoEnviarPedidoActionPerformed
 
-                    new AlterarFilialGUI().setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Filial não alterada.");
-                }
-
-            }
-        }
-        setComboFilial(comboFilial);
-    }//GEN-LAST:event_botaoAlterarCategoriaActionPerformed
-
-    private void comboFilialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFilialActionPerformed
-        //categoriaAtual = comboCategoria.getSelectedItem().toString();
-    }//GEN-LAST:event_comboFilialActionPerformed
+    private void comboPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPedidosActionPerformed
+        
+    }//GEN-LAST:event_comboPedidosActionPerformed
 
     private void botaoVoltarExcluirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarExcluirCategoriaActionPerformed
         new GUI.matriz.MatrizInicial().setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoVoltarExcluirCategoriaActionPerformed
 
-    private void textNovoNomeCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNovoNomeCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textNovoNomeCategoriaActionPerformed
+    private void comboFilialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFilialActionPerformed
+        
+    }//GEN-LAST:event_comboFilialActionPerformed
+
+    private void comboFilialItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboFilialItemStateChanged
+        filiais = filialController.findAll();
+        
+        if (filiais!=null && !filiais.isEmpty()) {
+            for ( Filial filial: filiais ) {
+                if ( filial.getNome().equals( comboFilial.getSelectedItem())) {
+                    this.filial = filial;
+                }
+            }
+        }
+    }//GEN-LAST:event_comboFilialItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoAlterarCategoria;
+    private javax.swing.JButton botaoEnviarPedido;
     private javax.swing.JButton botaoVoltarExcluirCategoria;
     private javax.swing.JComboBox comboFilial;
+    private javax.swing.JComboBox comboPedidos;
     private javax.swing.JLabel itsolution_logo;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel nomeCategoriaText3;
-    private javax.swing.JLabel nomeCategoriaText4;
     private javax.swing.JPanel panelIncluirCategoria;
-    private javax.swing.JTextField textNovoNomeCategoria;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel txtFilial;
+    private javax.swing.JLabel txtPedido;
     // End of variables declaration//GEN-END:variables
 
     /**
      * @return the comboCategoria
      */
     public javax.swing.JComboBox getComboCategoria() {
-        return comboFilial;
+        return getComboPedidos();
     }
 
     /**
-     * @param comboFilial the comboCategoria to set
+     * @param comboCategoria the comboCategoria to set
      */
     public void setComboFilial(javax.swing.JComboBox comboFilial) {
+        setControllers();
+        
+        filiais = filialController.findAll();
+        
+        if (filiais!=null && !filiais.isEmpty()) {
+            comboFilial.removeAllItems();
+            for ( Filial filial: filiais ) {
+                comboFilial.addItem(filial.getNome());
+            }
+            for ( Filial filial: filiais ) {
+                if ( filial.getNome().equals(comboFilial.getSelectedItem().toString() )) {
+                    this.filial = filial;
+                }
+            }
+        }
+        this.comboFilial = comboFilial;
+    }
+
+    /**
+     * @return the comboPedidos
+     */
+    public javax.swing.JComboBox getComboPedidos() {
+        return comboPedidos;
+    }
+
+    /**
+     * @param comboPedidos the comboPedidos to set
+     */
+    public void setComboPedidos(javax.swing.JComboBox comboPedidos) {
+        setControllers();
+        filtraPedidos();
+        if ( pedidosEnviar!= null ) {
+            for (Pedido pedido: pedidosEnviar) {
+                comboPedidos.addItem(pedido.getId());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Todos os pedidos ja foram encaminhados para as filiais.");
+            botaoEnviarPedido.setEnabled(false);
+            
+        }
+        this.comboPedidos = comboPedidos;
+    }
+    private void setControllers(){
         try {
             if (filialController == null) {
                 filialController = new FilialController();
+            }
+            if (pedidoController == null) {
+                pedidoController = new PedidoController();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor...");
             return;
         }
-        System.out.println("Criando array de categorias");
-        filiais = filialController.findAll().toArray(new Filial[0]);
-        System.out.println("Removendo itens da lista");
-        comboFilial.removeAllItems();
-
-        System.out.println("Criando array");
-        String[] itens = new String[filiais.length];
-        for (int i = 0; i < filiais.length; i++) {
-            itens[i] = filiais[i].getNome();
-            comboFilial.addItem(itens[i]);
-        }
-        //comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(categorias));
     }
-    /**
-     * @param comboCategoria comboCategoria to set
-     */
+    
+    private void filtraPedidos(){
+        setControllers();
+        pedidos = pedidoController.findAll();
+        
+        if ( pedidos!= null ) {
+            for (Pedido pedido: pedidos) {
+                if ( !pedido.isPedidoEncaminhado() ) {
+                    pedidosEnviar.add(pedido);
+                }
+            }
+        }
+    }
 }
