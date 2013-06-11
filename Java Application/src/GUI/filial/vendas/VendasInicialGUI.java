@@ -40,12 +40,12 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         this.filial = filial;
         initComponents();
         botaoIncluirProduto.setEnabled(false);
-        botaoRetirarItemCarrinho.setEnabled(false);
+        botaoLimparCarrinho.setEnabled(false);
         botaoFinalizar.setEnabled(false);
         carrinho = new Carrinho();
         title.setText("Filial " + this.filial.getNome());
         setComboProdutoFilial(comboProdutoFilial);
-        updateTable();
+        //updateTable();
         
         
     }
@@ -93,12 +93,9 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         botaoIncluirProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFiliais = new javax.swing.JTable();
-        panelIncluirCategoria2 = new javax.swing.JPanel();
-        comboProdutoRetirar = new javax.swing.JComboBox();
-        nomeCategoriaText6 = new javax.swing.JLabel();
-        botaoRetirarItemCarrinho = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
         botaoFinalizar = new javax.swing.JButton();
+        botaoLimparCarrinho = new javax.swing.JButton();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -173,49 +170,6 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblFiliais);
 
-        panelIncluirCategoria2.setBorder(javax.swing.BorderFactory.createTitledBorder("Retirar"));
-
-        comboProdutoRetirar.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboProdutoRetirarItemStateChanged(evt);
-            }
-        });
-
-        nomeCategoriaText6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText6.setText("Produto:");
-
-        botaoRetirarItemCarrinho.setText("Atualizar");
-        botaoRetirarItemCarrinho.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRetirarItemCarrinhoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelIncluirCategoria2Layout = new javax.swing.GroupLayout(panelIncluirCategoria2);
-        panelIncluirCategoria2.setLayout(panelIncluirCategoria2Layout);
-        panelIncluirCategoria2Layout.setHorizontalGroup(
-            panelIncluirCategoria2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelIncluirCategoria2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nomeCategoriaText6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboProdutoRetirar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoRetirarItemCarrinho)
-                .addContainerGap())
-        );
-        panelIncluirCategoria2Layout.setVerticalGroup(
-            panelIncluirCategoria2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelIncluirCategoria2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelIncluirCategoria2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelIncluirCategoria2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(nomeCategoriaText6)
-                        .addComponent(comboProdutoRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botaoRetirarItemCarrinho))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         botaoVoltar.setText("Cancelar");
         botaoVoltar.setToolTipText("");
         botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -237,27 +191,36 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             }
         });
 
+        botaoLimparCarrinho.setText("Limpar Carrinho");
+        botaoLimparCarrinho.setToolTipText("");
+        botaoLimparCarrinho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLimparCarrinhoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(title)
-                        .addGap(380, 380, 380)
-                        .addComponent(itsolution_logo))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(panelIncluirCategoria2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(botaoFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(10, 10, 10))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(title)
+                            .addGap(380, 380, 380)
+                            .addComponent(itsolution_logo))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botaoLimparCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,11 +235,10 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(panelIncluirCategoria2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVoltar)
-                    .addComponent(botaoFinalizar))
+                    .addComponent(botaoFinalizar)
+                    .addComponent(botaoLimparCarrinho))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -287,18 +249,18 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-657)/2, (screenSize.height-581)/2, 657, 581);
+        setBounds((screenSize.width-663)/2, (screenSize.height-498)/2, 663, 498);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
@@ -324,54 +286,33 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoFilialItemStateChanged
 
     private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
+        boolean itemExiste = false;
         if ( produtoFilialEscolhido != null ) {
-            ItemCarrinho novoItem = new ItemCarrinho(produtoFilialEscolhido,Short.parseShort(contadorIncluir.getValue().toString()));
-            carrinho.adicionarItem(novoItem);
-            updateTable();
-            setComboProdutoRetirar(comboProdutoRetirar);
-            botaoRetirarItemCarrinho.setEnabled(true);
-            botaoFinalizar.setEnabled(true);
-        }
-        setComboProdutoRetirar(comboProdutoRetirar);
-
-    }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
-
-    private void comboProdutoRetirarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoRetirarItemStateChanged
-        
-            if ( carrinho.getNumeroDeItens() > 0 ) {
-                itensCarrinho = carrinho.getItensCarrinho();
-                if (itensCarrinho != null && !itensCarrinho.isEmpty()) {
-                    
-                    if ( comboProdutoRetirar != null ) {
-                        comboProdutoRetirar.removeAllItems();
-                    }
-                    
-                    for (ItemCarrinho ic : itensCarrinho) {
-
-                        comboProdutoRetirar.addItem(ic.getProduto().getNome());
-                    }
-
-                    for (ItemCarrinho ic : itensCarrinho) {
-                        if (comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome())) {
-                            itemCarrinhoExcluir = ic;
-                        }
+            itensCarrinho = carrinho.getItensCarrinho();
+            if ( itensCarrinho != null && !itensCarrinho.isEmpty() ) {
+                for( ItemCarrinho itemVerifica: itensCarrinho ) {
+                    if ( produtoFilialEscolhido.getNome().equals(itemVerifica.getProduto().getNome()) ) {
+                        JOptionPane.showMessageDialog(null, "Produto ja esta no carrinho.");
+                        itemExiste = true;
                     }
                 }
+            }
+            if ( !itemExiste && Short.parseShort(contadorIncluir.getValue().toString()) > 0 ) {
                 
+                ItemCarrinho novoItem = new ItemCarrinho(produtoFilialEscolhido, Short.parseShort(contadorIncluir.getValue().toString()));
+                carrinho.adicionarItem(novoItem);
+                updateTable();
+                botaoLimparCarrinho.setEnabled(true);
+                botaoFinalizar.setEnabled(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Quantidade deve ser maior que zero.");
             }
             
-        
-    }//GEN-LAST:event_comboProdutoRetirarItemStateChanged
-
-    private void botaoRetirarItemCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetirarItemCarrinhoActionPerformed
-        if ( itemCarrinhoExcluir != null ) {
-            carrinho.deletarItem(itemCarrinhoExcluir);
-            updateTable();
-            if ( carrinho.getNumeroDeItens() == 0 ) {
-                botaoFinalizar.setEnabled(false);
-            }
         }
-    }//GEN-LAST:event_botaoRetirarItemCarrinhoActionPerformed
+        
+
+    }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
 
     private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
         //Pedido ped = new Pedido();
@@ -381,14 +322,24 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoFinalizarMouseReleased
 
+    private void botaoLimparCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparCarrinhoActionPerformed
+        if ( carrinho != null ) {
+            carrinho.clear();
+            carrinho.setNumeroDeItens(0);
+            carrinho.setPrecoTotal();
+            botaoLimparCarrinho.setEnabled(true);
+            botaoFinalizar.setEnabled(true);
+            updateTable();
+        }
+    }//GEN-LAST:event_botaoLimparCarrinhoActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFinalizar;
     private javax.swing.JButton botaoIncluirProduto;
-    private javax.swing.JButton botaoRetirarItemCarrinho;
+    private javax.swing.JButton botaoLimparCarrinho;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JComboBox comboProdutoFilial;
-    private javax.swing.JComboBox comboProdutoRetirar;
     private javax.swing.JSpinner contadorIncluir;
     private javax.swing.JLabel itsolution_logo;
     private javax.swing.JMenuItem jMenuItem1;
@@ -396,9 +347,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nomeCategoriaText4;
-    private javax.swing.JLabel nomeCategoriaText6;
     private javax.swing.JPanel panelIncluirCategoria1;
-    private javax.swing.JPanel panelIncluirCategoria2;
     private javax.swing.JTable tblFiliais;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
@@ -432,7 +381,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             //produtoController = new ProdutoController();
         } catch (Exception ex) {
             botaoIncluirProduto.setEnabled(false);
-            getBotaoRetirarProduto().setEnabled(false);
+            botaoLimparCarrinho.setEnabled(false);
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o servidor...");
             Logger.getLogger(RelacionarFilialGUI.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -471,52 +420,6 @@ public class VendasInicialGUI extends javax.swing.JFrame {
         SpinnerModel sm = new SpinnerNumberModel(0, -50, 100, 2);
         JSpinner spinner = new JSpinner(sm);
         this.contadorIncluir = spinner;
-    }
-
-    /**
-     * @return the botaoRetirarProduto
-     */
-    public javax.swing.JButton getBotaoRetirarProduto() {
-        return botaoRetirarItemCarrinho;
-    }
-
-    /**
-     * @param botaoRetirarProduto the botaoRetirarProduto to set
-     */
-    public void setBotaoRetirarProduto(javax.swing.JButton botaoRetirarProduto) {
-        
-        this.botaoRetirarItemCarrinho = botaoRetirarProduto;
-    }
-
-    /**
-     * @return the comboProdutoRetirar
-     */
-    public javax.swing.JComboBox getComboProdutoRetirar() {
-        return comboProdutoRetirar;
-    }
-
-    /**
-     * @param comboProdutoRetirar the comboProdutoRetirar to set
-     */
-    public void setComboProdutoRetirar(javax.swing.JComboBox comboProdutoRetirar) {
-        if ( !carrinho.getItensCarrinho().isEmpty() ) {
-            comboProdutoRetirar.removeAllItems();
-            itensCarrinho = carrinho.getItensCarrinho();
-            for ( ItemCarrinho ic: itensCarrinho ) {
-                comboProdutoRetirar.addItem(ic.getProduto().getNome());
-            }
-            for ( ItemCarrinho ic: itensCarrinho ) {
-                if ( comboProdutoRetirar.getSelectedItem().equals(ic.getProduto().getNome()) ) {
-                    itemCarrinhoExcluir = ic;
-                    botaoRetirarItemCarrinho.setEnabled(true);
-                    botaoFinalizar.setEnabled(true);
-                }
-            }
-        }
-        if ( carrinho.getNumeroDeItens() > 0 ) {
-            botaoFinalizar.setEnabled(true);
-        }
-        this.comboProdutoRetirar = comboProdutoRetirar;
     }
     
 }

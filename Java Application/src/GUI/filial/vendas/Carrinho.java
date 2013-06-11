@@ -16,7 +16,7 @@ import jpa.Produto;
 public class Carrinho {
 
     private List<ItemCarrinho> itensCarrinho;
-    int numeroDeItens;
+    private int numeroDeItens;
     double precoTotal;
 
     public Carrinho() {
@@ -38,7 +38,7 @@ public class Carrinho {
 
             if (newItem) {
                 getItensCarrinho().add(itemCarrinho);
-                numeroDeItens += itemCarrinho.getQuantidade();
+                setNumeroDeItens( this.numeroDeItens + 1 );
             }
         }
         
@@ -84,7 +84,7 @@ public class Carrinho {
 
     public synchronized void clear() {
         getItensCarrinho().clear();
-        numeroDeItens = 0;
+        setNumeroDeItens(0);
         precoTotal = 0;
     }
 
@@ -100,6 +100,13 @@ public class Carrinho {
      */
     public void setItensCarrinho(List<ItemCarrinho> itensCarrinho) {
         this.itensCarrinho = itensCarrinho;
+    }
+
+    /**
+     * @param numeroDeItens the numeroDeItens to set
+     */
+    public void setNumeroDeItens(int numeroDeItens) {
+        this.numeroDeItens = numeroDeItens;
     }
 
 }
