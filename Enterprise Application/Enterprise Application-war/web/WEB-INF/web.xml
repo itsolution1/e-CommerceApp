@@ -9,6 +9,7 @@
         <jsp-property-group>
             <description>configuracoes de header e footer</description>
             <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/cadastro.jsp</url-pattern>
             <url-pattern>/WEB-INF/view/*</url-pattern>
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
