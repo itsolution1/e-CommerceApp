@@ -8,6 +8,7 @@ package controller;
 import carrinho.Carrinho;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jpa.Categoria;
+import jpa.Cliente;
+import jpa.Endereco;
 import jpa.Produto;
 import jpa.WishList;
 import jpa.facade.CategoriaFacadeRemote;
+import jpa.facade.ClienteFacadeRemote;
+import jpa.facade.EnderecoFacadeRemote;
 import jpa.facade.ProdutoFacadeRemote;
 /**
 *
@@ -33,23 +38,31 @@ urlPatterns = {"/categoria",
     "/concluirCompra",
     "/comprar",
     "/addLista",
+    "/gravaLista",
     "/verLista",
-    "/login",
-    "/logout",
+    "/entra",
+    "/sai",
     "/cadastro",
-    "/addCadastro"})
+    "/addCadastro",
+    })
 public class ControllerServlet extends HttpServlet {
     
     @EJB
     private CategoriaFacadeRemote categoriaFacade;
     @EJB
     private ProdutoFacadeRemote produtoFacade;
+    @EJB
+    private ClienteFacadeRemote clienteFacade;
+    @EJB
+    private EnderecoFacadeRemote enderecoFacade;
+    private boolean logon;
         
     @Override
         public void init() throws ServletException{
         
         //guarda lista de categorias no contexto da servlet
            getServletContext().setAttribute("categorias", categoriaFacade.findAll());
+           getServletContext().setAttribute("clientes", clienteFacade.findAll());
         }
 
     /**
@@ -121,10 +134,9 @@ public class ControllerServlet extends HttpServlet {
 
             userPath = "/wishlist";
             // se o usuario quer encerrar a sessão
-        } else if (userPath.equals("/logout")) {
-            // TODO: Implementar logout
-        } else if (userPath.equals("/cadastro")) {
-            // TODO: Implementar cadastro
+        } else if (userPath.equals("/sai")) {
+            // TODO: Implementar sai
+
         }
 
         // use RequestDispatcher to forward request internally
@@ -154,6 +166,7 @@ public class ControllerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Carrinho cart = (Carrinho) session.getAttribute("cart");
         WishList lista = (WishList) session.getAttribute("lista");
+        Cliente cliente = (Cliente) session.getAttribute("cliente");
 
         // se a acao addCarrinho for chamada
         if (userPath.equals("/addCarrinho")) {
@@ -188,9 +201,8 @@ public class ControllerServlet extends HttpServlet {
             
             // se acao addLista for chamada
         } else if (userPath.equals("/addLista")) {
-            // TODO: Implement acao addLista
             
-            boolean logon = true;
+            logon = true;
             
             if ((lista == null) && (logon)) {
 
@@ -203,22 +215,87 @@ public class ControllerServlet extends HttpServlet {
 
                 Produto produto = produtoFacade.find(Long.parseLong(produtoId));
                 lista.addItem(produto);
+                
+                session.setAttribute("lista", lista);
             }
              
             userPath = "/categoria";
             // se acao comprar for chamada
+            
+            
+        
+        } else if (userPath.equals("/gravaLista")) {
+            // TODO: implementar acao grava lista
+            
+            WishList listaGravar = (WishList)session.getAttribute("lista");
+            
+            cliente.setLista(listaGravar);
+            
+            clienteFacade.edit(cliente);
+            
+            
+            
+            userPath = "/wishlist";
+            
+
+            
         } else if (userPath.equals("/comprar")) {
             // TODO: implementar acao comprar
 
             userPath = "/confirmacao";
             
             
-            // se acao login for chamada
-        } else if (userPath.equals("/login")) {
-            // TODO: implementar acao comprar
-
+            // se acao entra for chamada
+        } else if (userPath.equals("/entra")) {
+     
             
+            Cliente cli;
+            
+            String email = (String) request.getAttribute("email");
+            String senha = (String) request.getAttribute("senha");
+            
+            Collection clientes =  clienteFacade.findAll();
+            
+             for (Object c: clientes){
+                 cli = (Cliente)c;
+                 if (cli.getEmail().equals(email) && cli.getSenha().equals(senha)) {
+                     request.setAttribute("cliente", cli);
+                     userPath = "/";
+                     break;   
+                 }else{
+                     userPath = "naoEncontrado";
+                 }
+            } 
 
+        } else if (userPath.equals("/cadastro")) {
+            
+        String cpf = (String) request.getParameter("cpf");
+        String nome = (String) request.getParameter("nome");
+        String telefone = (String) request.getParameter("telefone");
+        String sexo = (String) request.getParameter("sexo");            
+        String senha = (String) request.getParameter("senha");
+        String email = (String) request.getParameter("email");
+        char sex = sexo.charAt(0);
+        
+        String logradouro = (String) request.getParameter("logradouro");
+        String complemento = (String) request.getParameter("complemento");
+        String numero = (String) request.getParameter("numero");
+        String bairro = (String) request.getParameter("bairro");
+        String cidade = (String) request.getParameter("cidade");
+        String uf = (String) request.getParameter("uf");
+        String cep = (String) request.getParameter("cep");
+        
+
+        Endereco endereco = new Endereco(logradouro,complemento,numero,bairro,cidade,uf,cep);
+        
+        cliente = new Cliente(cpf,nome,telefone,sex,senha,email);
+       
+        cliente.setEnderecoCadastro(endereco);
+        
+        clienteFacade.edit(cliente);
+   
+        userPath = "/cadastroOK";
+            
         }
 
         // use RequestDispatcher to forward request internally

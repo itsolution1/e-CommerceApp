@@ -32,6 +32,8 @@ public class Cliente implements Serializable, Cloneable {
    
    @OneToOne
    private WishList lista;
+   @OneToOne
+   private Endereco enderecoCadastro;
 //private Endereco enderecoCadastro;
 //private Endereco enderecoEntrega;
 
@@ -133,6 +135,34 @@ public class Cliente implements Serializable, Cloneable {
     @Override
     public Cliente clone() {
         return new Cliente(this.cpf, this.nome, this.telefone,this.sexo, this.senha, this.email);
+    }
+
+    /**
+     * @return the enderecoCadastro
+     */
+    public Endereco getEnderecoCadastro() {
+        return enderecoCadastro;
+    }
+
+    /**
+     * @param enderecoCadastro the enderecoCadastro to set
+     */
+    public void setEnderecoCadastro(Endereco enderecoCadastro) {
+        this.enderecoCadastro = enderecoCadastro;
+    }
+
+    /**
+     * @return the lista
+     */
+    public WishList getLista() {
+        return lista;
+    }
+
+    /**
+     * @param lista the lista to set
+     */
+    public void setLista(WishList lista) {
+        this.lista = lista;
     }
 
 

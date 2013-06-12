@@ -46,7 +46,17 @@
 
         <%-- checkout widget --%>
         <c:if test="${!empty lista && lista.numeroDeItens != 0}">
-            <a href="<c:url value='gravaLista'/>" class="bubble hMargin">Salvar Lista &#x279f;</a>
+            
+            <form action="<c:url value='gravaLista'/>" method="POST">
+                <input type="submit" value="Salvar">
+                
+                <input type="hidden"
+                             name="lista"
+                             value="${lista}">
+      
+            </form>
+            
+           
         </c:if>
     </div>
 
@@ -60,7 +70,6 @@
             <th>produto</th>
             <th>nome</th>
             <th>preco</th>
-            <th>quantidade</th>
         </tr>
 
         <c:forEach var="listItem" items="${lista.items}" varStatus="iter">
@@ -78,13 +87,6 @@
                 <span class="smallText">( R$ ${produto.preco} / un )</span>
             </td>
 
-            <td>
-                <form action="<c:url value='/removeLista'/>" method="post">
-                    <input type="submit"
-                           name="remove"
-                           value="remover">
-                </form>
-            </td>
           </tr>
 
         </c:forEach>
