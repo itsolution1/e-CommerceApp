@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -33,9 +34,16 @@ public class Pedido implements Serializable, Cloneable {
     private Collection<ItemPedido> itensPedido;
     private boolean pedidoEncaminhado;
     private boolean pedidoEnviadoCliente;
+    private boolean pedidoLojaFisica;
+    
+    @OneToOne
+    private Endereco endereco;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataDoPedido;
+    
+    @OneToOne
+    private Filial filial;
     
     //private Cliente cliente;
     public Pedido() {
@@ -48,6 +56,8 @@ public class Pedido implements Serializable, Cloneable {
         }
         this.pedidoEncaminhado = false;
         this.pedidoEnviadoCliente = false;
+        this.pedidoLojaFisica = false;
+        this.filial = null;
         setDataDoPedido();
     }
 
@@ -161,6 +171,48 @@ public class Pedido implements Serializable, Cloneable {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         this.dataDoPedido = date;
+    }
+
+    /**
+     * @return the endereco
+     */
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    /**
+     * @param endereco the endereco to set
+     */
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    /**
+     * @return the filial
+     */
+    public Filial getFilial() {
+        return filial;
+    }
+
+    /**
+     * @param filial the filial to set
+     */
+    public void setFilial(Filial filial) {
+        this.filial = filial;
+    }
+
+    /**
+     * @return the pedidoOneline
+     */
+    public boolean isPedidoLojaFisica() {
+        return pedidoLojaFisica;
+    }
+
+    /**
+     * @param pedidoOneline the pedidoOneline to set
+     */
+    public void setPedidoLojaFisica(boolean pedidoOneline) {
+        this.pedidoLojaFisica = pedidoOneline;
     }
 
 }

@@ -11,9 +11,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import jpa.Filial;
 import jpa.ItemPedido;
 import jpa.Pedido;
@@ -25,13 +22,12 @@ import jpa.Produto;
  */
 public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
     
-    private Carrinho            carrinho = null;
-    private Collection<ItemCarrinho> itensCarrinho = null;
     private Filial filial = null;
-    private Produto produtoFilialEscolhido = null;
     private PedidoController pedidoController = null;
-    private Collection<Produto> produtosFilial = null;
-    
+    private Collection<Pedido> pedidosEnviar = null;
+    private Collection<ItemPedido> itensPedido = null;
+    private Collection<Pedido> pedidos = null;
+    private Pedido pedido = null;
 
     /**
      * Creates new form ContatoGUI
@@ -39,12 +35,9 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
     public EnviarProdutosParaClienteGUI(Filial filial) {
         this.filial = filial;
         initComponents();
-        botaoIncluirProduto.setEnabled(false);
-        botaoLimparCarrinho.setEnabled(false);
-        botaoFinalizar.setEnabled(false);
-        carrinho = new Carrinho();
+        botaoEnviar.setEnabled(false);
         title.setText("Filial " + this.filial.getNome());
-        setComboProdutoFilial(comboProdutoFilial);
+        
  
     }
     
@@ -52,15 +45,15 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
     private void updateTable() {
         setControllers();
         
-        this.itensCarrinho = (Collection)this.carrinho.getItensCarrinho();
-        if ( this.itensCarrinho !=null ) {
+        this.itensPedido = (Collection)this.pedido.getItensPedido();
+        if ( this.itensPedido !=null ) {
             
-            ItemCarrinho[] vetorItemCarinho = this.itensCarrinho.toArray(new ItemCarrinho[0]);
-            Object[][] objects = new Object[vetorItemCarinho.length][2];
+            ItemPedido[] vetorItensPedido = this.itensPedido.toArray(new ItemPedido[0]);
+            Object[][] objects = new Object[vetorItensPedido.length][2];
             
-            for (int i = 0; i < vetorItemCarinho.length; i++) {
-                objects[i][0] = vetorItemCarinho[i].getProduto().getNome();
-                objects[i][1] = vetorItemCarinho[i].getQuantidade();
+            for (int i = 0; i < vetorItensPedido.length; i++) {
+                objects[i][0] = vetorItensPedido[i].getProduto().getNome();
+                objects[i][1] = vetorItensPedido[i].getQuantidade();
         }
         this.tblFiliais.setModel(new javax.swing.table.DefaultTableModel(
                 objects,
@@ -84,15 +77,13 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         itsolution_logo = new javax.swing.JLabel();
         panelIncluirCategoria1 = new javax.swing.JPanel();
-        comboProdutoFilial = new javax.swing.JComboBox();
+        comboPedidos = new javax.swing.JComboBox();
         nomeCategoriaText4 = new javax.swing.JLabel();
-        contadorIncluir = new javax.swing.JSpinner();
-        botaoIncluirProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFiliais = new javax.swing.JTable();
         botaoVoltar = new javax.swing.JButton();
-        botaoFinalizar = new javax.swing.JButton();
-        botaoLimparCarrinho = new javax.swing.JButton();
+        botaoEnviar = new javax.swing.JButton();
+        txtEndereco = new javax.swing.JLabel();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -104,53 +95,39 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title.setText("Vendas");
+        title.setText("Enviar Pedidos");
         title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         itsolution_logo.setText("ITSolution");
 
         panelIncluirCategoria1.setBorder(javax.swing.BorderFactory.createTitledBorder("Incluir"));
 
-        comboProdutoFilial.addItemListener(new java.awt.event.ItemListener() {
+        comboPedidos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboProdutoFilialItemStateChanged(evt);
+                comboPedidosItemStateChanged(evt);
             }
         });
 
         nomeCategoriaText4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        nomeCategoriaText4.setText("Produto:");
-
-        botaoIncluirProduto.setText("Incluir");
-        botaoIncluirProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoIncluirProdutoActionPerformed(evt);
-            }
-        });
+        nomeCategoriaText4.setText("Pedido");
 
         javax.swing.GroupLayout panelIncluirCategoria1Layout = new javax.swing.GroupLayout(panelIncluirCategoria1);
         panelIncluirCategoria1.setLayout(panelIncluirCategoria1Layout);
         panelIncluirCategoria1Layout.setHorizontalGroup(
             panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIncluirCategoria1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(nomeCategoriaText4)
-                .addGap(18, 18, 18)
-                .addComponent(comboProdutoFilial, 0, 310, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contadorIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botaoIncluirProduto)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboPedidos, 0, 544, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelIncluirCategoria1Layout.setVerticalGroup(
             panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIncluirCategoria1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addContainerGap()
                 .addGroup(panelIncluirCategoria1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(contadorIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboProdutoFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomeCategoriaText4)
-                    .addComponent(botaoIncluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -175,26 +152,21 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
             }
         });
 
-        botaoFinalizar.setText("Finalizar");
-        botaoFinalizar.setToolTipText("");
-        botaoFinalizar.addMouseListener(new java.awt.event.MouseAdapter() {
+        botaoEnviar.setText("Enviar");
+        botaoEnviar.setToolTipText("");
+        botaoEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                botaoFinalizarMouseReleased(evt);
+                botaoEnviarMouseReleased(evt);
             }
         });
-        botaoFinalizar.addActionListener(new java.awt.event.ActionListener() {
+        botaoEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFinalizarActionPerformed(evt);
+                botaoEnviarActionPerformed(evt);
             }
         });
 
-        botaoLimparCarrinho.setText("Limpar Carrinho");
-        botaoLimparCarrinho.setToolTipText("");
-        botaoLimparCarrinho.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLimparCarrinhoActionPerformed(evt);
-            }
-        });
+        txtEndereco.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtEndereco.setText("Endereco:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,22 +174,20 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(title)
+                        .addGap(380, 380, 380)
+                        .addComponent(itsolution_logo))
+                    .addComponent(txtEndereco)
+                    .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(title)
-                            .addGap(380, 380, 380)
-                            .addComponent(itsolution_logo))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botaoLimparCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(botaoEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,16 +197,17 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(itsolution_logo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelIncluirCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(txtEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVoltar)
-                    .addComponent(botaoFinalizar)
-                    .addComponent(botaoLimparCarrinho))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botaoEnviar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,19 +216,19 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-663)/2, (screenSize.height-498)/2, 663, 498);
+        setBounds((screenSize.width-704)/2, (screenSize.height-579)/2, 704, 579);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
@@ -265,103 +236,39 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
         new GUI.filial.InicioGUI(this.filial).setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
-    private void comboProdutoFilialItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProdutoFilialItemStateChanged
+    private void comboPedidosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboPedidosItemStateChanged
         if ( this.filial != null ) {
-            
-            produtosFilial = filial.getProdutos();
-            
-            if ( this.produtosFilial != null && !this.produtosFilial.isEmpty() ) {
-                for (Produto p : produtosFilial) {
-                    if ( getComboProdutoFilial().getSelectedItem() != null && getComboProdutoFilial().getSelectedItem().equals(p.getNome()) ) {
-                        this.produtoFilialEscolhido = p;
-                        SpinnerModel sm = new SpinnerNumberModel(0, 0, this.produtoFilialEscolhido.getQuantidade(), 1);
-                        this.contadorIncluir.setModel(sm);
-                        botaoIncluirProduto.setEnabled(true);
+            if ( pedidosEnviar != null ) {
+                for ( Pedido pedido: pedidosEnviar ) {
+                    if ( pedido.getId().toString().equals(comboPedidos.getSelectedItem()) ) {
+                        this.pedido = pedido;
+                        this.txtEndereco.setText("Endereco:\n"
+                                + this.pedido.getEndereco().toString());
                     }
                 }
             }
+            
         }
-    }//GEN-LAST:event_comboProdutoFilialItemStateChanged
+    }//GEN-LAST:event_comboPedidosItemStateChanged
 
-    private void botaoIncluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirProdutoActionPerformed
-        boolean itemExiste = false;
-        if ( produtoFilialEscolhido != null ) {
-            itensCarrinho = carrinho.getItensCarrinho();
-            if ( itensCarrinho != null && !itensCarrinho.isEmpty() ) {
-                for( ItemCarrinho itemVerifica: itensCarrinho ) {
-                    if ( produtoFilialEscolhido.getNome().equals(itemVerifica.getProduto().getNome()) ) {
-                        JOptionPane.showMessageDialog(null, "Produto ja esta no carrinho.");
-                        itemExiste = true;
-                    }
-                }
-            }
-            if ( !itemExiste && Short.parseShort(contadorIncluir.getValue().toString()) > 0 ) {
-                
-                ItemCarrinho novoItem = new ItemCarrinho(produtoFilialEscolhido, Short.parseShort(contadorIncluir.getValue().toString()));
-                carrinho.adicionarItem(novoItem);
-                updateTable();
-                botaoLimparCarrinho.setEnabled(true);
-                botaoFinalizar.setEnabled(true);
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Quantidade deve ser maior que zero.");
-            }
-            
+    private void botaoEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnviarActionPerformed
+        setControllers();
+        if (this.pedido != null) {
+            this.pedido.setPedidoEnviadoCliente(true);
+            pedidoController.edit(pedido);
         }
         
+    }//GEN-LAST:event_botaoEnviarActionPerformed
 
-    }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
-
-    private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
-        setControllers();
-        if ( carrinho != null ) {
-            Collection<ItemPedido> itensPedido = null;
-            Pedido pedido = new Pedido();
-            itensCarrinho = carrinho.getItensCarrinho();
-            if (itensCarrinho != null && !itensCarrinho.isEmpty()) {
-                for( ItemCarrinho item: itensCarrinho ) {
-                    Produto produto = item.getProduto();
-                    short quantidade = item.getQuantidade();
-                    if ( produto!= null ) {
-                        if ( quantidade > 0 ) {
-                            ItemPedido itemPedido = new ItemPedido(produto, quantidade);
-                            itensPedido.add( itemPedido );
-                        }
-                    }
-                    
-                }
-                pedido.setItensPedido(itensPedido);
-                pedido.setPedidoEncaminhado(true);
-                pedido.setPedidoEnviadoCliente(true);
-                pedido.setValorTotal();
-                
-            }
-        }
-    }//GEN-LAST:event_botaoFinalizarActionPerformed
-
-    private void botaoFinalizarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoFinalizarMouseReleased
+    private void botaoEnviarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEnviarMouseReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoFinalizarMouseReleased
-
-    private void botaoLimparCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparCarrinhoActionPerformed
-        if ( carrinho != null ) {
-            carrinho.clear();
-            carrinho.setNumeroDeItens(0);
-            carrinho.setPrecoTotal();
-            botaoLimparCarrinho.setEnabled(true);
-            botaoFinalizar.setEnabled(true);
-            updateTable();
-        }
-    }//GEN-LAST:event_botaoLimparCarrinhoActionPerformed
+    }//GEN-LAST:event_botaoEnviarMouseReleased
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoFinalizar;
-    private javax.swing.JButton botaoIncluirProduto;
-    private javax.swing.JButton botaoLimparCarrinho;
+    private javax.swing.JButton botaoEnviar;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JComboBox comboProdutoFilial;
-    private javax.swing.JSpinner contadorIncluir;
+    private javax.swing.JComboBox comboPedidos;
     private javax.swing.JLabel itsolution_logo;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -371,24 +278,12 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelIncluirCategoria1;
     private javax.swing.JTable tblFiliais;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel txtEndereco;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the carrinho
-     */
-    public Carrinho getCarrinho() {
-        return carrinho;
-    }
-
-    /**
-     * @param carrinho the carrinho to set
-     */
-    public void setCarrinho(Carrinho carrinho) {
-        this.carrinho = carrinho;
-    }
-
+  
     public javax.swing.JComboBox getComboProdutoFilial() {
-        return comboProdutoFilial;
+        return comboPedidos;
     }
 
     /**
@@ -403,46 +298,39 @@ public class EnviarProdutosParaClienteGUI extends javax.swing.JFrame {
             }
             
         } catch (Exception ex) {
-            botaoIncluirProduto.setEnabled(false);
-            botaoLimparCarrinho.setEnabled(false);
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o servidor...");
             Logger.getLogger(RelacionarFilialGUI.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
     }
-
-    /**
-     * @param comboProdutoFilial the comboProdutoFilial to set
-     */
-    public void setComboProdutoFilial(javax.swing.JComboBox comboProdutoFilial) {
-        if ( filial != null ) {
-            comboProdutoFilial.removeAllItems();
-            produtosFilial = this.filial.getProdutos();
-            if ( produtosFilial != null && !produtosFilial.isEmpty() ) {
-                botaoIncluirProduto.setEnabled(true);
-                for ( Produto p: produtosFilial ) {
-                    comboProdutoFilial.addItem(p.getNome());
+    
+    private void filtraPedidos(){
+        setControllers();
+        pedidos = pedidoController.findAll();
+        
+        if ( pedidos!= null ) {
+            for (Pedido pedido: pedidos) {
+                if ( !pedido.isPedidoEnviadoCliente() && pedido.isPedidoEncaminhado() && pedido.isPedidoLojaFisica() && pedido.getFilial().getNome().equals(this.filial.getNome())) {
+                    pedidosEnviar.add(pedido);
                 }
-                
             }
         }
-        this.comboProdutoFilial = comboProdutoFilial;
     }
-
-    /**
-     * @return the contadorIncluir
-     */
-    public javax.swing.JSpinner getContadorIncluir() {
-        return contadorIncluir;
-    }
-
-    /**
-     * @param contadorIncluir the contadorIncluir to set
-     */
-    public void setContadorIncluir(javax.swing.JSpinner contadorIncluir) {
-        SpinnerModel sm = new SpinnerNumberModel(0, -50, 100, 2);
-        JSpinner spinner = new JSpinner(sm);
-        this.contadorIncluir = spinner;
+    
+    
+    public void setComboPedidos(javax.swing.JComboBox comboPedidos) {
+        setControllers();
+        filtraPedidos();
+        if ( pedidosEnviar!= null ) {
+            for (Pedido pedido: pedidosEnviar) {
+                comboPedidos.addItem(pedido.getId());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Todos os pedidos ja foram encaminhados para as filiais.");
+            botaoEnviar.setEnabled(false);
+            
+        }
+        this.comboPedidos = comboPedidos;
     }
     
 }

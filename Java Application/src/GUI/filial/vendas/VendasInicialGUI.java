@@ -30,7 +30,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     private Produto produtoFilialEscolhido = null;
     private PedidoController pedidoController = null;
     private Collection<Produto> produtosFilial = null;
-    
+    private Collection<ItemPedido> itensPedido;
 
     /**
      * Creates new form ContatoGUI
@@ -314,7 +314,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
         setControllers();
         if ( carrinho != null ) {
-            Collection<ItemPedido> itensPedido = null;
+            
             Pedido pedido = new Pedido();
             itensCarrinho = carrinho.getItensCarrinho();
             if (itensCarrinho != null && !itensCarrinho.isEmpty()) {
@@ -329,11 +329,12 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                     }
                     
                 }
-                pedido.setItensPedido(itensPedido);
+                pedido.setItensPedido( itensPedido );
                 pedido.setPedidoEncaminhado(true);
                 pedido.setPedidoEnviadoCliente(true);
+                pedido.setPedidoLojaFisica(false);
+                pedido.setEndereco(null);
                 pedido.setValorTotal();
-                
             }
         }
     }//GEN-LAST:event_botaoFinalizarActionPerformed

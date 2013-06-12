@@ -196,7 +196,12 @@ public class EnviarPedidosGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEnviarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnviarPedidoActionPerformed
-        
+        if (filial != null) {
+            if (pedido != null) {
+                this.pedido.setPedidoEnviadoCliente(true);
+                pedidoController.edit(pedido);
+            }
+        }
         
     }//GEN-LAST:event_botaoEnviarPedidoActionPerformed
 
