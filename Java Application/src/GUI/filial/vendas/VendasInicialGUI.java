@@ -312,6 +312,10 @@ public class VendasInicialGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoIncluirProdutoActionPerformed
 
     private void botaoFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarActionPerformed
+        
+    }//GEN-LAST:event_botaoFinalizarActionPerformed
+
+    private void botaoFinalizarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoFinalizarMouseReleased
         setControllers();
         if ( carrinho != null ) {
             
@@ -320,7 +324,7 @@ public class VendasInicialGUI extends javax.swing.JFrame {
             if (itensCarrinho != null && !itensCarrinho.isEmpty()) {
                 for( ItemCarrinho item: itensCarrinho ) {
                     Produto produto = item.getProduto();
-                    short quantidade = item.getQuantidade();
+                    short quantidade = (short)item.getQuantidade();
                     if ( produto!= null ) {
                         if ( quantidade > 0 ) {
                             ItemPedido itemPedido = new ItemPedido(produto, quantidade);
@@ -337,10 +341,6 @@ public class VendasInicialGUI extends javax.swing.JFrame {
                 pedido.setValorTotal();
             }
         }
-    }//GEN-LAST:event_botaoFinalizarActionPerformed
-
-    private void botaoFinalizarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoFinalizarMouseReleased
-        // TODO add your handling code here:
     }//GEN-LAST:event_botaoFinalizarMouseReleased
 
     private void botaoLimparCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparCarrinhoActionPerformed
